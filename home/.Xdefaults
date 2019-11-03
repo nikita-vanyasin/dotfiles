@@ -1,0 +1,51 @@
+##############
+# Xft settings
+##############
+
+Xft.dpi:                    96
+Xft.antialias:              true
+Xft.rgba:                   rgb
+Xft.hinting:                true
+Xft.hintstyle:              hintslight
+
+
+! special colors
+*.foreground:  #c0c5ce
+*.background:  #2b303b
+*.cursorColor:  #c0c5ce
+! black
+*.color0:      #2b303b
+*.color8:      #65737e
+! red
+*.color1:      #bf616a
+*.color9:      #bf616a
+! green
+*.color2:      #a3be8c
+*.color10:     #a3be8c
+! yellow
+*.color3:      #a0a042
+*.color11:     #c0c000
+! blue
+*.color4:      #4444e5
+*.color12:     #4444e5
+! magenta
+*.color5:      #b48ead
+*.color13:     #b48ead
+! cyan
+*.color6:      #96b5b4
+*.color14:     #96b5b4
+! white
+*.color7:      #c0c5ce
+*.color15:     #eff1f5
+
+URxvt*scrollBar:         true
+URxvt*scrollBar_right:   true
+
+URxvt*transparent:       false
+
+URxvt.font: xft:Liberation Mono:pixelsize=18
+URxvt.letterSpace: 0
+
+*antialias:  true
+*autohint:   true
+

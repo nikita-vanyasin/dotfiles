@@ -1,0 +1,7 @@
+[user]
+	email = nikita.vanyasin@gmail.com
+	name = Nikita Vanyasin
+[github]
+	user = nikita-vanyasin
+[credential]
+	helper = store

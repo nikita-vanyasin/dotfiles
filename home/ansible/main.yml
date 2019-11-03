@@ -1,0 +1,59 @@
+---
+- name: My Thinkpad X1 gen7 laptop provisioning
+  hosts: localhost
+  become: yes
+  vars:
+    local_home: "{{ lookup('env','HOME') }}"
+    local_user: "{{ lookup('env','USER') }}"
+  tasks:
+    - name: create and setup aur_builder user
+      user: name=aur_builder
+    - name: grant aur_builder more permissions
+      lineinfile:
+        path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
+        state: present
+        line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+        validate: /usr/bin/visudo -cf %s
+        create: yes
+    - name: create projects dir
+      file:
+        path: "{{ local_home }}/projects"
+        state: directory
+        mode: '0755'
+    - name: packages
+      pacman:
+        update_cache: no
+        name:
+          - mc
+          - xf86-video-intel
+          - xorg
+          - xorg-xinit
+          - i3
+          - py3status
+          - dmenu
+          - pango
+          - ttf-dejavu
+          - zenity
+          - flameshot
+          - thunderbird
+          - xdg-utils
+          - perl-file-mimeinfo
+          - rxvt-unicode
+          - dunst
+          - go
+    - name: AUR packages
+      aur:
+        name:
+          - xinit-xsession
+          - j4-dmenu-desktop-git
+          - telegram-desktop-bin
+          #- hamster-time-tracker
+          - safeeyes
+          - google-chrome
+        skip_installed: yes
+      become: yes
+      become_user: aur_builder
+    - name: generate Xorg fonts index 100dpi
+      command: mkfontdir /usr/share/fonts/100dpi
+      
+      

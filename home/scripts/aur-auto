@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+  echo "provide AUR package pathname"
+  exit 1
+fi
+
+rm -rf /tmp/aur-build/$1
+git clone https://aur.archlinux.org/$1.git /tmp/aur-build/$1
+cd /tmp/aur-build/$1
+makepkg -sri
+cd -
+
+ 
