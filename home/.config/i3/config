@@ -3,7 +3,6 @@
 
 set $mod Mod4
 
-#font pango:monospace 10
 font pango:DejaVu Sans Mono 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -199,9 +198,10 @@ exec --no-startup-id telegram-desktop
 #TODO: exec --no-startup-id hamster-indicator
 exec --no-startup-id safeeyes
 # TODO: find config for safeeyes
-# TODO: probably it is already can start automatically
+# TODO: probably safeeyes is already can start automatically
 # TODO: copy uxrvt configs
 # TODO: install upwork
+# TODO: telegram config ?
 
 for_window [class="upwork"] floating enable
 

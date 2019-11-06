@@ -41,6 +41,10 @@
           - rxvt-unicode
           - dunst
           - go
+          - htop
+          - tor
+          - fwupd
+          - wget
     - name: AUR packages
       aur:
         name:
@@ -55,5 +59,16 @@
       become_user: aur_builder
     - name: generate Xorg fonts index 100dpi
       command: mkfontdir /usr/share/fonts/100dpi
+    - name: Configure display size (automatically detected size is incorrect)
+      blockinfile:
+        path: "/etc/X11/xorg.conf.d/90-monitor.conf"
+        create: yes
+        content: |
+          Section "Monitor"
+            Identifier    "<default monitor>"
+            DisplaySize   310 174
+          EndSection
+      
+      
       
       

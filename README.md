@@ -14,3 +14,9 @@ $ homeshick clone nikita-vanyasin/dotfiles
 
 $ cd ~/ansible
 $ ./run.sh
+
+
+...
+$ homeshich cd dotfiles
+git status
+# review and reset files if needed with $ git checkout -- <filepath>
