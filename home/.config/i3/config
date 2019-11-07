@@ -153,25 +153,19 @@ bar {
     tray_output primary
 }
 
-
-set $audiocard 1
-
-# TODO:
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $audiocard +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $audiocard -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $audiocard toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
+bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
+bindsym XF86AudioMute        exec --no-startup-id pulseaudio-ctl mute
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10 && dunstify -r 6661 `xbacklight -get`"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10 && dunstify -r 6661 `xbacklight -get`"
 
-# Touchpad controls
-#TODO: bindsym $mod+t exec ~/scripts/toggle-touchpad.sh
-
-# print screen
+# PrtScr btn
 bindsym --release Print exec flameshot gui
 
+# TODO: how to toggle touchpad to train the trackpoint skill?
 
 new_window none
 new_float none
@@ -182,20 +176,13 @@ workspace_auto_back_and_forth yes
 default_border normal 1px
 default_floating_border normal 1px
 
-#TODO: exec_always --no-startup-id ~/xrandr-settings.sh
-
 # TODO: exec --no-startup-id ~/i3-battery-popup -L 14 -t 3m -N
 exec --no-startup-id xsetroot -solid "#000000"
-exec --no-startup-id "setxkbmap -layout us,ru"
-exec --no-startup-id "setxkbmap -option 'grp:caps_toggle,grp_led:caps'"
-# TODO: exec --no-startup-id ~/touchpad-settings.sh
-# TODO: exec --no-startup-id parcellite
-# TODO: exec --no-startup-id /usr/bin/blueman-applet
+
+exec --no-startup-id /usr/bin/blueman-applet
 exec google-chrome-stable
-# TODO: exec --no-startup-id /opt/JetBrains/jetbrains-toolbox
 exec thunderbird
 exec --no-startup-id telegram-desktop
-#TODO: exec --no-startup-id hamster-indicator
 exec --no-startup-id safeeyes
 # TODO: find config for safeeyes
 # TODO: probably safeeyes is already can start automatically

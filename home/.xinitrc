@@ -4,4 +4,4 @@
 
 #xrdb -merge ~/.Xresources (to load ~/.Xresources if you use it)
 
-exec i3 #-d all
+exec dbus-launch i3 #-d all

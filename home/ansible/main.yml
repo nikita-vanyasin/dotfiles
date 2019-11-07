@@ -29,12 +29,12 @@
           - xorg
           - xorg-xinit
           - i3
+          - xf86-input-libinput
           - py3status
           - dmenu
           - pango
           - ttf-dejavu
           - zenity
-          - flameshot
           - thunderbird
           - xdg-utils
           - perl-file-mimeinfo
@@ -45,13 +45,18 @@
           - tor
           - fwupd
           - wget
+          - pulseaudio
+          - blueman
+          - pulseaudio-bluetooth
     - name: AUR packages
       aur:
         name:
           - xinit-xsession
           - j4-dmenu-desktop-git
+          - pulseaudio-ctl
+          - flameshot-git
           - telegram-desktop-bin
-          #- hamster-time-tracker
+          - jetbrains-toolbox
           - safeeyes
           - google-chrome
         skip_installed: yes
@@ -68,7 +73,35 @@
             Identifier    "<default monitor>"
             DisplaySize   310 174
           EndSection
-      
-      
-      
-      
+    - name: Configure Keyboard layout and toggling
+      blockinfile:
+        path: "/etc/X11/xorg.conf.d/00-keyboard.conf"
+        create: yes
+        content: |
+          Section "InputClass"
+            Identifier "system-keyboard"
+            MatchIsKeyboard "on"
+            Option "XkbLayout" "us,ru"
+            Option "XkbOptions" "grp:caps_toggle,grp_led:caps"
+          EndSection
+    - name: Configure Volume control buttons
+      blockinfile:
+        path: "/usr/share/pulseaudio/alsa-mixer/paths/analog-output.conf.common"
+        marker: "; {mark} ANSIBLE MANAGED BLOCK"
+        insertbefore: \[Element PCM\]
+        content: |
+          [Element Master]
+          switch = mute
+          volume = ignore
+    - name: Congfigure Backlight control
+      blockinfile:
+        path: "/etc/X11/xorg.conf.d/10-intel_backlight.conf"
+        create: yes
+        content: |
+          Section "Device"
+            Identifier  "card0"
+            Driver      "intel"
+            Option      "Backlight"  "intel_backlight"
+            BusID "PCI:0:2:0"
+          EndSection
+
