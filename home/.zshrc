@@ -21,9 +21,11 @@ prompt walters
 # aliases:
 #alias ls=`ls --color=auto`
 
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
 
 # PATH updates:
-export PATH=$HOME/scripts:$PATH
+export PATH=$HOME/scripts:$GOBIN:$PATH
 
-# other...
+# other tools
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"

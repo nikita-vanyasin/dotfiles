@@ -112,7 +112,7 @@
             Identifier  "card0"
             Driver      "intel"
             Option      "Backlight"  "intel_backlight"
-            BusID "PCI:0:2:0"
+            BusID       "PCI:0:2:0"
           EndSection
     - name: Lock screen automatically on Wake from sleep (suspend)
       blockinfile:
@@ -136,7 +136,7 @@
       systemd:
         enabled: yes
         name: wakelock
-    - name: Handly symlink for mounted devices
+    - name: Handy symlink for mounted devices
       file:
         state: link
         owner: "{{ local_user }}"
