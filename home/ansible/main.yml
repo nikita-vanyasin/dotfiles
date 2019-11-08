@@ -22,7 +22,7 @@
         mode: '0755'
     - name: packages
       pacman:
-        update_cache: no
+        update_cache: yes
         name:
           - mc
           - xf86-video-intel
@@ -48,6 +48,11 @@
           - pulseaudio
           - blueman
           - pulseaudio-bluetooth
+          - ntfs-3g
+          - udiskie
+          - docker
+          - remmina
+          - freerdp
     - name: AUR packages
       aur:
         name:
@@ -104,4 +109,37 @@
             Option      "Backlight"  "intel_backlight"
             BusID "PCI:0:2:0"
           EndSection
-
+    - name: Lock screen automatically on Wake from sleep (suspend)
+      blockinfile:
+        path: /etc/systemd/system/wakelock.service
+        create: yes
+        content: |
+          [Unit]
+          Description=Runs i3lock on system resume from a suspended state
+          Before=systemd-suspend.service
+          
+          [Service]
+          User={{ local_user }}
+          Type=forking
+          Environment=DISPLAY=:0
+          ExecStart=/usr/bin/i3lock -c '#000000'
+          
+          [Install]
+          WantedBy=sleep.target
+          WantedBy=suspend.target          
+    - name: Enable wakelock service
+      systemd:
+        enabled: yes
+        name: wakelock
+    - name: Handly symlink for mounted devices
+      file:
+        state: link
+        owner: "{{ local_user }}"
+        dest: "/home/{{ local_user }}/media"
+        src: "/run/media/{{ local_user }}"
+    - name: Enable and start docker service
+      systemd:
+        enabled: yes
+        state: started
+        name: docker
+        

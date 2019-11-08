@@ -7,3 +7,9 @@
 	helper = store
 [push]
 	default = upstream
+[core]
+	autocrlf = input
+[http]
+	cookiefile = /home/nikita/.gitcookies
+
+

@@ -159,13 +159,14 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
 bindsym XF86AudioMute        exec --no-startup-id pulseaudio-ctl mute
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10 && dunstify -r 6661 `xbacklight -get`"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10 && dunstify -r 6661 `xbacklight -get`"
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10 && dunstify -r 6661 `xbacklight -get`"
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 10 && dunstify -r 6661 `xbacklight -get`"
 
 # PrtScr btn
 bindsym --release Print exec flameshot gui
 
-# TODO: how to toggle touchpad to train the trackpoint skill?
+# Toogle touchpad
+bindsym $mod+t exec ~/scripts/toggle-touchpad.sh
 
 new_window none
 new_float none
@@ -176,19 +177,20 @@ workspace_auto_back_and_forth yes
 default_border normal 1px
 default_floating_border normal 1px
 
-# TODO: exec --no-startup-id ~/i3-battery-popup -L 14 -t 3m -N
+# start a battery notification daemon
+exec --no-startup-id ~/scripts/i3-battery-popup -L 14 -t 3m -N
+
+# Background
 exec --no-startup-id xsetroot -solid "#000000"
 
+
+# Auto-start:
 exec --no-startup-id /usr/bin/blueman-applet
 exec google-chrome-stable
 exec thunderbird
+exec --no-startup-id udiskie -t
 exec --no-startup-id telegram-desktop
 exec --no-startup-id safeeyes
-# TODO: find config for safeeyes
-# TODO: probably safeeyes is already can start automatically
-# TODO: copy uxrvt configs
-# TODO: install upwork
-# TODO: telegram config ?
 
 for_window [class="upwork"] floating enable
 
