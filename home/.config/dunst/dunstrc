@@ -1,6 +1,6 @@
 [global]
     #font = SF Pro Display Medium 12
-    font = pango:DejaVu Sans Mono 10
+    font = pango:DejaVu Sans Mono 11
 
 
     # allow a small subset of html markup:

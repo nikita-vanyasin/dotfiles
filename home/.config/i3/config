@@ -144,7 +144,7 @@ bar {
         separator_symbol " | "
 
         colors {
-                separator #333333
+                separator #444444
         }
 }
 

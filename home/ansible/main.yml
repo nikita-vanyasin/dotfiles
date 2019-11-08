@@ -51,8 +51,12 @@
           - ntfs-3g
           - udiskie
           - docker
+          - docker-compose
+          - docker-machine
           - remmina
           - freerdp
+          - virtualbox
+          - virtualbox-guest-iso
     - name: AUR packages
       aur:
         name:
@@ -64,6 +68,7 @@
           - jetbrains-toolbox
           - safeeyes
           - google-chrome
+          - watson
         skip_installed: yes
       become: yes
       become_user: aur_builder
