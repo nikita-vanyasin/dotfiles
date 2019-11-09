@@ -33,4 +33,7 @@
 2) Many resources recommend to update BIOS firmware as the new version contains various fixes, including addressing of [throttling](https://wiki.archlinux.org/index.php/Lenovo_ThinkPad_X1_Carbon_(Gen_7)#Power_management/Throttling_issues) issue.
   I've updated the firmware via Windows, but it can be updated on Linux using [fwupd tool](https://wiki.archlinux.org/index.php/Lenovo_ThinkPad_X1_Carbon_(Gen_7)#Updates), too.
   
-  
+
+### More useful links
+- Enabling Microphone Mute keyboard and it's LED: https://gist.github.com/tybenz/5620255 
+- Various config tricks for X1 Carbon: https://github.com/alberto-santini/i3-configuration-x1

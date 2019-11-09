@@ -7,6 +7,8 @@ bindkey -e
 
 # autocomplete:
 zstyle :compinstall filename '/home/nikita/.zshrc'
+zstyle ':completion:*' menu select
+zstyle ':completion::complete:*' gain-privileges 1
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -18,9 +20,9 @@ autoload -Uz promptinit
 promptinit
 prompt walters
 
-# TODO: aliases:
-# alias ls=`ls --color=auto`
-# alias grep=`grep --color`
+alias ls='ls --color=auto'
+alias ll='ls -al'
+alias grep='grep --color'
 
 
 export GOPATH=$HOME/go
