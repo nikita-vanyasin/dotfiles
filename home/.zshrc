@@ -18,8 +18,10 @@ autoload -Uz promptinit
 promptinit
 prompt walters
 
-# aliases:
-#alias ls=`ls --color=auto`
+# TODO: aliases:
+# alias ls=`ls --color=auto`
+# alias grep=`grep --color`
+
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin

@@ -185,7 +185,6 @@ exec --no-startup-id xsetroot -solid "#000000"
 
 
 # Auto-start:
-exec --no-startup-id /usr/bin/blueman-applet
 exec google-chrome-stable
 exec thunderbird
 exec --no-startup-id udiskie -t

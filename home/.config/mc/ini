@@ -24,7 +24,7 @@ drop_menus=false
 wrap_mode=true
 old_esc_mode=true
 cd_symlinks=true
-show_all_if_ambiguous=false
+show_all_if_ambiguous=true
 use_file_to_guess_type=true
 alternate_plus_minus=false
 only_leading_plus_minus=true
@@ -82,7 +82,7 @@ editor_backup_extension=~
 editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
-skin=default
+skin=darkfar
 
 filepos_max_saved_entries=1024
 

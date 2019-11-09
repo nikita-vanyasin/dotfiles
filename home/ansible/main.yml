@@ -3,6 +3,7 @@
   hosts: localhost
   become: yes
   vars:
+    gen_warning: "WARNING! This file is controlled by Ansible script."
     local_home: "{{ lookup('env','HOME') }}"
     local_user: "{{ lookup('env','USER') }}"
   tasks:
@@ -57,6 +58,8 @@
           - freerdp
           - virtualbox
           - virtualbox-guest-iso
+          - acpi
+          - acpid
     - name: AUR packages
       aur:
         name:
@@ -131,7 +134,8 @@
           
           [Install]
           WantedBy=sleep.target
-          WantedBy=suspend.target          
+          WantedBy=suspend.target
+          
     - name: Enable wakelock service
       systemd:
         enabled: yes
@@ -139,6 +143,7 @@
     - name: Handy symlink for mounted devices
       file:
         state: link
+        force: yes
         owner: "{{ local_user }}"
         dest: "/home/{{ local_user }}/media"
         src: "/run/media/{{ local_user }}"
@@ -147,4 +152,30 @@
         enabled: yes
         state: started
         name: docker
-        
+    - name: Add Mic Mute keyboard event handler (Fn+F4=F20)
+      copy:
+        content: |
+          # {{ gen_warning }}
+          event=button/f20 F20 00000080 00000000 K
+          action=/etc/acpi/lenovo-mutemic.sh
+        dest: /etc/acpi/events/lenovo-mutemic
+    - name: Add Mic Mute LED control script
+      copy:
+        content: |
+          #!/bin/bash
+          # {{ gen_warning }}
+          INPUT_DEVICE="'Capture'"
+          if amixer sget $INPUT_DEVICE,0 | grep '\[on\]' ; then
+              amixer sset $INPUT_DEVICE,0 nocap
+              echo "1" > /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness
+          else
+              amixer sset $INPUT_DEVICE,0 cap
+              echo "0" > /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness
+          fi
+        dest: /etc/acpi/lenovo-mutemic.sh
+        mode: 0777
+    - name: Enable and start acpid service
+      systemd:
+        enabled: yes
+        state: started
+        name: acpid

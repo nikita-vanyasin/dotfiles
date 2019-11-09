@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
-#xmodmap ~/.Xmodmap (note: this is for my custom key assignments)
+# disable beep:
+xset -b
 
-#xrdb -merge ~/.Xresources (to load ~/.Xresources if you use it)
-
+xmodmap ~/.Xmodmap
 
 # configure TrackPoint sensitivity:
 deviceID=$(xinput --list  | grep -i trackpoint | awk '{print $6}' | awk -F "="  '{print $2}')
