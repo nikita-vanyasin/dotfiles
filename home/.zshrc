@@ -5,6 +5,10 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+export DEFAULT_USER=nikita
+
+source "$HOME/.zbindkeys"
+
 # autocomplete:
 zstyle :compinstall filename '/home/nikita/.zshrc'
 zstyle ':completion:*' menu select
@@ -18,12 +22,10 @@ compinit
 # prompt:
 autoload -Uz promptinit
 promptinit
-prompt walters
 
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
-
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
@@ -33,3 +35,4 @@ export PATH=$HOME/scripts:$GOBIN:$PATH
 
 # other tools
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+source "$HOME/.zsh_plugins.sh"

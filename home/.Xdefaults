@@ -1,5 +1,5 @@
 ##############
-# Xft settings
+## Xft settings
 ##############
 
 Xft.dpi:                    120
@@ -43,8 +43,8 @@ URxvt*scrollBar_right:   true
 
 URxvt*transparent:       false
 
-URxvt.font: xft:Liberation Mono:pixelsize=20
-URxvt.letterSpace: 0
+URxvt*font: xft:Liberation Mono:fontsize=20
+URxvt*letterSpace: 0
 
 *antialias:  true
 *autohint:   true

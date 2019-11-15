@@ -29,7 +29,7 @@
           - xf86-video-intel
           - xorg
           - xorg-xinit
-          - i3
+# FIXME:  - i3
           - xf86-input-libinput
           - py3status
           - dmenu
@@ -39,7 +39,6 @@
           - thunderbird
           - xdg-utils
           - perl-file-mimeinfo
-          - rxvt-unicode
           - dunst
           - go
           - htop
@@ -60,18 +59,22 @@
           - virtualbox-guest-iso
           - acpi
           - acpid
+          - ttf-opensans
+          - telegram-desktop
+          - xclip
     - name: AUR packages
       aur:
         name:
+          - rxvt-unicode-patched
           - xinit-xsession
           - j4-dmenu-desktop-git
           - pulseaudio-ctl
           - flameshot-git
-          - telegram-desktop-bin
           - jetbrains-toolbox
           - safeeyes
           - google-chrome
           - watson
+          - antibody
         skip_installed: yes
       become: yes
       become_user: aur_builder
@@ -116,6 +119,16 @@
             Driver      "intel"
             Option      "Backlight"  "intel_backlight"
             BusID       "PCI:0:2:0"
+          EndSection
+    - name: Configure xf86-video-intel
+      blockinfile:
+        path: "/etc/X11/xorg.conf.d/20-intel.conf"
+        create: yes
+        content: |
+          Section "Device"
+            Identifier  "Intel Graphics"
+            Driver      "intel"
+            Option      "AccelMethod"  "glamor"
           EndSection
     - name: Lock screen automatically on Wake from sleep (suspend)
       blockinfile:
@@ -165,12 +178,17 @@
           #!/bin/bash
           # {{ gen_warning }}
           INPUT_DEVICE="'Capture'"
+          LED_BRIGHTNESS="/sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
           if amixer sget $INPUT_DEVICE,0 | grep '\[on\]' ; then
-              amixer sset $INPUT_DEVICE,0 nocap
-              echo "1" > /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness
+              if [ "$1" != "update_led_only" ]; then
+                  amixer sset $INPUT_DEVICE,0 nocap
+              fi
+              echo "1" > $LED_BRIGHTNESS
           else
-              amixer sset $INPUT_DEVICE,0 cap
-              echo "0" > /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness
+              if [ "$1" != "update_led_only" ]; then
+                  amixer sset $INPUT_DEVICE,0 cap
+              fi
+              echo "0" > $LED_BRIGHTNESS
           fi
         dest: /etc/acpi/lenovo-mutemic.sh
         mode: 0777
@@ -179,3 +197,9 @@
         enabled: yes
         state: started
         name: acpid
+    - name: Update zsh plugins
+      become: yes
+      become_user: "{{ local_user }}"
+      command: "{{ local_home }}/scripts/update_zsh_plugins.sh"
+      
+      
