@@ -1,3 +1,3 @@
 #!/usr/bin/zsh
 
-antibody bundle < ~/.zsh_plugins > ~/.zsh_plugins.sh
+ANTIBODY_HOME=~/.config/antibody antibody bundle < ~/.zsh_plugins > ~/.zsh_plugins.sh

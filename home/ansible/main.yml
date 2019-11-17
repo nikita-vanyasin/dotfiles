@@ -82,6 +82,7 @@
           - google-chrome
           - watson
           - antibody
+          - profile-sync-daemon
         skip_installed: yes
       become: yes
       become_user: aur_builder
@@ -241,4 +242,28 @@
         enabled: yes
         state: started
         name: fstrim.timer
+    - name: Allow user to use overlayfs for profile-sync-daemon
+      blockinfile:
+        path: /etc/sudoers
+        marker: "## {mark} ANSIBLE MANAGED BLOCK"
+        content: |
+          {{ local_user }} ALL=(ALL) NOPASSWD: /usr/bin/psd-overlay-helper
+    - name: Enable and start Profile Sync Daemon service
+      systemd:
+        enabled: yes
+        scope: user
+        state: started
+        name: psd
+      become: yes
+      become_user: "{{ local_user }}"
+    - name: Setup a Login Screen look and feel
+      copy:
+        dest: /etc/issue
+        src: ./configs/issue
+        force: yes
+    - name: move .cache folder to RAM
+      blockinfile:
+        path: /etc/fstab
+        content: |
+          tmpfs	/home/nikita/.cache	tmpfs	noatime,nodev,nosuid,size=1024M	0	0
         
