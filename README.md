@@ -12,13 +12,14 @@
 
 ### Guide
 1) Install ArchLinux. Useful guides: [1](https://wiki.archlinux.org/index.php/Installation_guide), [2](https://kozikow.com/2016/06/03/installing-and-configuring-arch-linux-on-thinkpad-x1-carbon/)
-2) Set up a network connection. I've installed [NetworkManager](https://wiki.archlinux.org/index.php/NetworkManager) during the Arch setup
-3) `$ pacman -S git ansible`
-4) Install [homeshick](https://github.com/andsens/homeshick#quick-install)
-5) `$ homeshick clone nikita-vanyasin/dotfiles`
-6) `$ cd ~/ansible && ./run.sh`
-7) Wait for it ...
-8) Try to login into X session.
+1) I've specified these mount options in fstab for ext4 `/` partition: `rw,noatime,barrier=0,commit=60`
+1) Set up a network connection. I've installed [NetworkManager](https://wiki.archlinux.org/index.php/NetworkManager) during the Arch setup
+1) `$ pacman -S git ansible`
+1) Install [homeshick](https://github.com/andsens/homeshick#quick-install)
+1) `$ homeshick clone nikita-vanyasin/dotfiles`
+1) `$ cd ~/ansible && ./run.sh`
+1) Wait for it ...
+1) Try to login into X session.
 
 
 ### Notes

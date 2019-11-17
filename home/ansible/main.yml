@@ -29,8 +29,9 @@
           - xf86-video-intel
           - xorg
           - xorg-xinit
-# FIXME:  - i3
+          #- i3
           - xf86-input-libinput
+          - chrony
           - py3status
           - dmenu
           - pango
@@ -62,11 +63,17 @@
           - ttf-opensans
           - telegram-desktop
           - xclip
+          - tlp
+          - tp_smapi
+          - acpi_call
+          - ethtool
+          - iotop
     - name: AUR packages
       aur:
         name:
           - rxvt-unicode-patched
           - xinit-xsession
+          - networkmanager-dispatcher-chrony
           - j4-dmenu-desktop-git
           - pulseaudio-ctl
           - flameshot-git
@@ -197,9 +204,41 @@
         enabled: yes
         state: started
         name: acpid
+    - name: Add NTP servers to chrony config
+      blockinfile:
+        path: /etc/chrony.conf
+        content: |
+          server 0.ru.pool.ntp.org
+          server 1.ru.pool.ntp.org
+          server 2.ru.pool.ntp.org
+          server 3.ru.pool.ntp.org
+    - name: Enable and start chronyd service
+      systemd:
+        enabled: yes
+        state: started
+        name: chronyd
+    - name: Configure TLP
+      copy:
+        force: yes
+        dest: /etc/default/tlp
+        src: ./configs/tlp
+    - name: Enable and start tlp service
+      systemd:
+        enabled: yes
+        state: started
+        name: tlp
+    - name: Enable and start tlp-sleep service
+      systemd:
+        enabled: yes
+        state: started
+        name: tlp-sleep
     - name: Update zsh plugins
       become: yes
       become_user: "{{ local_user }}"
       command: "{{ local_home }}/scripts/update_zsh_plugins.sh"
-      
-      
+    - name: Enable periodic TRIM on SSD devices
+      systemd:
+        enabled: yes
+        state: started
+        name: fstrim.timer
+        
