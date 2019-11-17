@@ -61,7 +61,6 @@
           - acpi
           - acpid
           - ttf-opensans
-          - telegram-desktop
           - xclip
           - tlp
           - tp_smapi
@@ -69,6 +68,9 @@
           - ethtool
           - efibootmgr
           - iotop
+          - picom
+          - hsetroot
+          - telegram-desktop
     - name: AUR packages
       aur:
         name:
@@ -129,16 +131,6 @@
             Option      "Backlight"  "intel_backlight"
             BusID       "PCI:0:2:0"
           EndSection
-    - name: Configure xf86-video-intel
-      blockinfile:
-        path: "/etc/X11/xorg.conf.d/20-intel.conf"
-        create: yes
-        content: |
-          Section "Device"
-            Identifier  "Intel Graphics"
-            Driver      "intel"
-            Option      "AccelMethod"  "glamor"
-          EndSection
     - name: Lock screen automatically on Wake from sleep (suspend)
       blockinfile:
         path: /etc/systemd/system/wakelock.service
@@ -169,11 +161,6 @@
         owner: "{{ local_user }}"
         dest: "/home/{{ local_user }}/media"
         src: "/run/media/{{ local_user }}"
-    - name: Enable and start docker service
-      systemd:
-        enabled: yes
-        state: started
-        name: docker
     - name: Add Mic Mute keyboard event handler (Fn+F4=F20)
       copy:
         content: |

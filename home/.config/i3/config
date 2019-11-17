@@ -185,27 +185,18 @@ default_floating_border normal 1px
 
 floating_maximum_size 1280 x 960
 
-# start a battery notification daemon
+# Auto-start
+exec --no-startup-id picom -CGb
 exec --no-startup-id ~/scripts/i3-battery-popup -L 14 -t 3m -N
-
-# Background
-exec --no-startup-id xsetroot -solid "#000000"
-
-
-# Auto-start:
+exec --no-startup-id hsetroot -solid "#000000"
 exec google-chrome-stable
 exec thunderbird
 exec --no-startup-id udiskie -t
 exec --no-startup-id telegram-desktop
 exec --no-startup-id safeeyes
-
-# Tooggle touchpad off
 exec --no-startup-id ~/scripts/toggle-touchpad.sh
 
 for_window [class="upwork"] floating enable
-
-for_window [class="Thunderbird"] layout stacking
-
 assign [class="Thunderbird"] 2
 
 
