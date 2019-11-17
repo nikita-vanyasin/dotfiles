@@ -1,0 +1,31 @@
+[Default Applications]
+x-scheme-handler/tg=telegramdesktop.desktop
+text/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+x-scheme-handler/rdp=org.remmina.Remmina.desktop
+x-scheme-handler/spice=org.remmina.Remmina.desktop
+x-scheme-handler/vnc=org.remmina.Remmina.desktop
+x-scheme-handler/remmina=org.remmina.Remmina.desktop
+application/x-remmina=org.remmina.Remmina.desktop
+
+image/jpeg=google-chrome.desktop
+image/png=google-chrome.desktop
+image/gif=google-chrome.desktop
+video/webm=google-chrome.desktop
+audio/webm=google-chrome.desktop
+audio/mp3=google-chrome.desktop
+audio/wav=google-chrome.desktop
+application/pdf=google-chrome.desktop
+
+inode/directory=mc.desktop
+
+[Added Associations]
+x-scheme-handler/rdp=org.remmina.Remmina.desktop;
+x-scheme-handler/spice=org.remmina.Remmina.desktop;
+x-scheme-handler/vnc=org.remmina.Remmina.desktop;
+x-scheme-handler/remmina=org.remmina.Remmina.desktop;
+application/x-remmina=org.remmina.Remmina.desktop;

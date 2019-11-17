@@ -46,6 +46,10 @@ URxvt*transparent:       false
 URxvt*font: xft:Liberation Mono:fontsize=20
 URxvt*letterSpace: 0
 
+Rxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+
 *antialias:  true
 *autohint:   true
 

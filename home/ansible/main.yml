@@ -67,6 +67,7 @@
           - tp_smapi
           - acpi_call
           - ethtool
+          - efibootmgr
           - iotop
     - name: AUR packages
       aur:
@@ -266,4 +267,11 @@
         path: /etc/fstab
         content: |
           tmpfs	/home/nikita/.cache	tmpfs	noatime,nodev,nosuid,size=1024M	0	0
-        
+    - name: Add more power-saving options
+      blockinfile:
+        path: /etc/sysctl.d/powersave.conf
+        create: yes
+        content: |
+          kernel.nmi_watchdog = 0
+          vm.dirty_writeback_centisecs = 6000
+          

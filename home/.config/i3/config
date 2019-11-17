@@ -172,6 +172,8 @@ bindsym --release Print exec flameshot gui
 # Toogle touchpad
 bindsym $mod+t exec ~/scripts/toggle-touchpad.sh
 
+workspace_layout stacking
+
 new_window none
 new_float none
 

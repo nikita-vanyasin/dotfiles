@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=/home/nikita/scripts/EX mc
+MimeType=inode/directory;
+Name=Midnight Commander
+StartupNotify=false
+Terminal=true
+Type=Application
