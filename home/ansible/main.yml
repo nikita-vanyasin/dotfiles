@@ -86,6 +86,7 @@
           - watson
           - antibody
           - profile-sync-daemon
+          - micro
         skip_installed: yes
       become: yes
       become_user: aur_builder

@@ -5,6 +5,8 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+export VISUAL="micro"
+export EDITOR="micro"
 export DEFAULT_USER=nikita
 
 source "$HOME/.zbindkeys"
