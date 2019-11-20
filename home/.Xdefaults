@@ -43,7 +43,7 @@ URxvt*scrollBar_right:   true
 
 URxvt*transparent:       false
 
-URxvt*font: xft:Liberation Mono:fontsize=20
+URxvt*font: xft:Consolas:pixelsize=20
 URxvt*letterSpace: 0
 
 Rxvt.perl-ext-common: default,matcher

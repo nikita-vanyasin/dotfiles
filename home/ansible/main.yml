@@ -26,6 +26,8 @@
         update_cache: yes
         name:
           - mc
+          - zip
+          - unzip
           - xf86-video-intel
           - xorg
           - xorg-xinit
@@ -42,6 +44,7 @@
           - perl-file-mimeinfo
           - dunst
           - go
+          - go-tools
           - htop
           - tor
           - fwupd
@@ -87,6 +90,7 @@
           - antibody
           - profile-sync-daemon
           - micro
+          - vk-messenger
         skip_installed: yes
       become: yes
       become_user: aur_builder
@@ -250,11 +254,25 @@
         dest: /etc/issue
         src: ./configs/issue
         force: yes
-    - name: move .cache folder to RAM
+    - name: Create Windows partition mount folder
+      file:
+        path: /mnt/windows
+        state: directory
+    - name: Add fstab entries
       blockinfile:
         path: /etc/fstab
         content: |
-          tmpfs	/home/nikita/.cache	tmpfs	noatime,nodev,nosuid,size=1024M	0	0
+          tmpfs /home/nikita/.cache tmpfs	noatime,nodev,nosuid,size=1024M	0	0
+          /dev/nvme0n1p3    /mnt/windows    ntfs    defaults,rw
+    - name: Apply fstab updates
+      command: mount -a
+    - name: Add Windows fonts
+      file:
+        src: /mnt/windows/Windows/Fonts
+        dest: /usr/share/fonts/WindowsFonts
+        state: link
+    - name: Update Font cache
+      command: fc-cache -f
     - name: Add more power-saving options
       blockinfile:
         path: /etc/sysctl.d/powersave.conf
@@ -262,4 +280,9 @@
         content: |
           kernel.nmi_watchdog = 0
           vm.dirty_writeback_centisecs = 6000
-          
+    - name: Allow users to build Golang sources
+      file:
+        path: /usr/lib/go/pkg
+        recurse: yes
+        state: directory
+        mode: '1777'
