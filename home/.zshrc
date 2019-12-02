@@ -13,7 +13,7 @@ source "$HOME/.zbindkeys"
 
 # autocomplete:
 zstyle :compinstall filename '/home/nikita/.zshrc'
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu select rehash true
 zstyle ':completion::complete:*' gain-privileges 1
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
@@ -28,6 +28,9 @@ promptinit
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
+alias dev-breezzly='cd ~/go/src/gitlab.com/nikita-vanyasin/breezzly'
+alias dev-cloudradar='cd ~/go/src/github.com/cloudradar-monitoring'
+alias jqp='jq "."'
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
@@ -38,3 +41,7 @@ export PATH=$HOME/scripts:$GOBIN:$PATH
 # other tools
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source "$HOME/.zsh_plugins.sh"
+
+# silience
+unsetopt BEEP
+unsetopt LIST_BEEP

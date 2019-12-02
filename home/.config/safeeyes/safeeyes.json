@@ -65,7 +65,7 @@
             "version": "0.0.3"
         },
         {
-            "enabled": false,
+            "enabled": true,
             "id": "smartpause",
             "settings": {
                 "idle_time": 5,
@@ -87,7 +87,7 @@
             "enabled": false,
             "id": "healthstats",
             "settings": {
-                "statistics_reset_interval": 24
+                "statistics_reset_interval": 24.0
             },
             "version": "0.0.2"
         },
@@ -98,7 +98,7 @@
         }
     ],
     "postpone_duration": 5,
-    "pre_break_warning_time": 4,
+    "pre_break_warning_time": 3,
     "rpc_port": 7200,
     "short_break_duration": 20,
     "short_break_interval": 20,
@@ -110,5 +110,5 @@
     "shortcut_disable_time": 2,
     "shortcut_postpone": 65,
     "shortcut_skip": 9,
-    "strict_break": true
+    "strict_break": false
 }

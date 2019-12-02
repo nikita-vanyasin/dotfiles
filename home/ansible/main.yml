@@ -27,7 +27,9 @@
         name:
           - mc
           - zip
+          - tree
           - unzip
+          - jq
           - xf86-video-intel
           - xorg
           - xorg-xinit
@@ -59,6 +61,7 @@
           - docker-machine
           - remmina
           - freerdp
+          - virtualbox-host-modules-arch
           - virtualbox
           - virtualbox-guest-iso
           - acpi
@@ -91,6 +94,7 @@
           - profile-sync-daemon
           - micro
           - vk-messenger
+          - grive
         skip_installed: yes
       become: yes
       become_user: aur_builder
@@ -245,10 +249,16 @@
       systemd:
         enabled: yes
         scope: user
-        state: started
         name: psd
       become: yes
       become_user: "{{ local_user }}"
+    - name: Enable and start Profile Sync Daemon service
+      systemd:
+        scope: user
+        state: started
+        name: psd
+      become: yes
+      become_user: "{{ local_user }}"    
     - name: Setup a Login Screen look and feel
       copy:
         dest: /etc/issue
@@ -286,3 +296,40 @@
         recurse: yes
         state: directory
         mode: '1777'
+    - name: Add systemd job to sync Google Drive
+      blockinfile:
+        path: /etc/systemd/system/google-drive-sync.service
+        create: yes
+        content: |
+          [Unit]
+          Description=Runs Grive to sync Google Drive folder
+          
+          [Service]
+          User={{ local_user }}
+          Type=oneshot
+          Environment=HOME=/home/{{ local_user }}
+          ExecStart=/home/{{ local_user }}/scripts/grive-sync.sh
+    - name: Add systemd timer to run Google Drive Sync
+      blockinfile:
+        path: /etc/systemd/system/google-drive-sync.timer
+        create: yes
+        content: |
+          [Unit]
+          Description=Run Google Drive sync every 15 min
+          
+          [Timer]
+          OnCalendar=*:0/15
+          Persistent=true
+          
+          [Install]
+          WantedBy=timers.target
+    - name: Enable google sync
+      systemd:
+        name: google-drive-sync.service
+        enabled: yes
+    - name: Enable and start google sync timer
+      systemd:
+        name: google-drive-sync.timer
+        state: started
+        enabled: yes
+        
