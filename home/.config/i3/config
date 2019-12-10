@@ -102,8 +102,8 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "zenity --question --text 'DO YOU WANT TO LOGOUT? This will end your X session.' --ok-label 'Logout' --cancel-label 'Cancel' && i3-msg exit"
 
-#i3 lock
-bindsym $mod+Shift+l exec "i3lock -c '#000000'"
+# lock screen
+bindsym $mod+Shift+l exec "~/scripts/lock-screen.sh"
 
 # suspend
 bindsym $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
