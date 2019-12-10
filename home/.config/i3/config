@@ -183,8 +183,6 @@ workspace_auto_back_and_forth yes
 default_border normal 1px
 default_floating_border normal 1px
 
-floating_maximum_size 1280 x 960
-
 # Auto-start
 exec --no-startup-id picom -CGb
 exec --no-startup-id ~/scripts/i3-battery-popup -L 14 -t 3m -N
