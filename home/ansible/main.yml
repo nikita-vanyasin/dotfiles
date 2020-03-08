@@ -29,6 +29,7 @@
           - zip
           - tree
           - unzip
+          - unrar
           - jq
           - xf86-video-intel
           - xorg
@@ -80,6 +81,11 @@
           - pavucontrol
           - vlc
           - sof-firmware
+          - pinta
+          - texlive-most
+          - gummi
+          - inkscape
+          - soundfont-fluid
     - name: AUR packages
       aur:
         name:
@@ -99,6 +105,7 @@
           - grive
           - xkb-switch
           - virtualbox-ext-oracle
+          - vlc-plugin-fluidsynth
         skip_installed: yes
       become: yes
       become_user: aur_builder
