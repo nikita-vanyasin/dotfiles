@@ -53,6 +53,8 @@
           - fwupd
           - wget
           - pulseaudio
+          - bluez
+          - bluez-utils
           - blueman
           - pulseaudio-bluetooth
           - ntfs-3g
@@ -81,11 +83,12 @@
           - pavucontrol
           - vlc
           - sof-firmware
-          - pinta
           - texlive-most
           - gummi
           - inkscape
           - soundfont-fluid
+          - xautolock
+          - moreutils
     - name: AUR packages
       aur:
         name:
@@ -101,8 +104,8 @@
           - watson
           - antibody
           - micro
-          - vk-messenger
-          - grive
+          - pinta-git
+          - grive-git
           - xkb-switch
           - virtualbox-ext-oracle
           - vlc-plugin-fluidsynth
@@ -229,13 +232,17 @@
     - name: Configure TLP
       copy:
         force: yes
-        dest: /etc/default/tlp
+        dest: /etc/tlp.conf
         src: ./configs/tlp
+      tags:
+        - tlp
     - name: Enable and start tlp service
       systemd:
         enabled: yes
         state: started
         name: tlp
+      tags:
+        - tlp
     - name: Update zsh plugins
       become: yes
       become_user: "{{ local_user }}"

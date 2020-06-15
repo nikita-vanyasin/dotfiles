@@ -31,6 +31,7 @@ alias grep='grep --color'
 alias dev-breezzly='cd ~/go/src/gitlab.com/nikita-vanyasin/breezzly'
 alias dev-cloudradar='cd ~/go/src/github.com/cloudradar-monitoring'
 alias dev-gostr='cd ~/go/src/github.com/nikita-vanyasin/gostr'
+alias dev-rport='cd ~/projects/cloudradar-monitoring/rport'
 alias drive='cd ~/Desktop/GOOGLE'
 alias dis='cd ~/Desktop/GOOGLE/аспирант/disser'
 
