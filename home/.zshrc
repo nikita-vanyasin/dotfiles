@@ -48,3 +48,6 @@ source "$HOME/.zsh_plugins.sh"
 # silience
 unsetopt BEEP
 unsetopt LIST_BEEP
+
+
+export TERMINAL="urxvt >> /tmp/urxvt-my.log"

@@ -185,6 +185,7 @@ default_floating_border normal 1px
 
 # Auto-start
 exec --no-startup-id picom -CGb
+exec --no-startup-id pulseeffects --gapplication-service
 exec --no-startup-id ~/scripts/i3-battery-popup -L 14 -t 3m -N
 exec --no-startup-id hsetroot -solid "#000000"
 exec google-chrome-stable

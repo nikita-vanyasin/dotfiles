@@ -89,6 +89,9 @@
           - soundfont-fluid
           - xautolock
           - moreutils
+          - keepassxc
+          - peek
+          - pulseeffects
     - name: AUR packages
       aur:
         name:
@@ -265,7 +268,7 @@
       blockinfile:
         path: /etc/fstab
         content: |
-          tmpfs /home/nikita/.cache tmpfs	noatime,nodev,nosuid,size=1024M	0	0
+          tmpfs /home/nikita/.cache tmpfs	noatime,nodev,nosuid,size=2048M	0	0
           /dev/nvme0n1p3    /mnt/windows    ntfs    defaults,rw
     - name: Apply fstab updates
       command: mount -a
