@@ -158,9 +158,9 @@ bar {
 }
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
-bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
-bindsym XF86AudioMute        exec --no-startup-id pulseaudio-ctl mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10 && dunstify -r 6661 `xbacklight -get`"
@@ -194,7 +194,7 @@ exec --no-startup-id udiskie -t
 exec --no-startup-id telegram-desktop -startintray
 exec --no-startup-id safeeyes
 exec --no-startup-id ~/scripts/toggle-touchpad.sh
-exec --no-startup-id xautolock -detectsleep -corners +00- -cornersize 30 -time 20 -locker "systemctl suspend" -notify 10 -notifier "dunstify 'Suspend in 10 sec!'"
+exec --no-startup-id xautolock -detectsleep -corners -000 -cornersize 45 -time 20 -locker "systemctl suspend" -notify 10 -notifier "dunstify 'Suspend in 10 sec!'"
 
 
 for_window [class="upwork"] floating enable

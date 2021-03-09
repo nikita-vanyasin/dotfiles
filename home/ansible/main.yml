@@ -52,11 +52,12 @@
           - tor
           - fwupd
           - wget
-          - pulseaudio
+          - pipewire
+          - pipewire-pulse
+          - pipewire-alsa
           - bluez
           - bluez-utils
           - blueman
-          - pulseaudio-bluetooth
           - ntfs-3g
           - udiskie
           - docker
@@ -91,7 +92,7 @@
           - moreutils
           - keepassxc
           - peek
-          - pulseeffects
+          - micro
     - name: AUR packages
       aur:
         name:
@@ -106,7 +107,6 @@
           - google-chrome
           - watson
           - antibody
-          - micro
           - pinta-git
           - grive-git
           - xkb-switch
@@ -137,15 +137,6 @@
             Option "XkbLayout" "us,ru"
             Option "XkbOptions" "grp:caps_toggle,grp_led:caps"
           EndSection
-    - name: Configure Volume control buttons
-      blockinfile:
-        path: "/usr/share/pulseaudio/alsa-mixer/paths/analog-output.conf.common"
-        marker: "; {mark} ANSIBLE MANAGED BLOCK"
-        insertbefore: \[Element PCM\]
-        content: |
-          [Element Master]
-          switch = mute
-          volume = ignore
     - name: Congfigure Backlight control
       blockinfile:
         path: "/etc/X11/xorg.conf.d/10-intel_backlight.conf"
@@ -340,10 +331,3 @@
         content: |
           blacklist snd_hda_intel
           blacklist snd_soc_skl
-    - name: Configure pulseaudio
-      blockinfile:
-        path: /etc/pulse/default.pa
-        content: |
-          load-module module-alsa-sink device=hw:0,0 channels=4
-          load-module module-alsa-source device=hw:0,7 channels=4
-          

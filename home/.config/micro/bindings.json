@@ -1,3 +1,5 @@
 {
-	"Ctrl-y": "DeleteLine"
+    "Alt-/": "lua:comment.comment",
+    "Ctrl-y": "DeleteLine",
+    "CtrlUnderscore": "lua:comment.comment"
 }
