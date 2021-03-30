@@ -93,6 +93,7 @@
           - keepassxc
           - peek
           - micro
+          - pulseeffects
     - name: AUR packages
       aur:
         name:
@@ -137,7 +138,7 @@
             Option "XkbLayout" "us,ru"
             Option "XkbOptions" "grp:caps_toggle,grp_led:caps"
           EndSection
-    - name: Congfigure Backlight control
+    - name: Configure Backlight control
       blockinfile:
         path: "/etc/X11/xorg.conf.d/10-intel_backlight.conf"
         create: yes
@@ -331,3 +332,11 @@
         content: |
           blacklist snd_hda_intel
           blacklist snd_soc_skl
+    - name: Disable some wake-from-suspend events
+      copy:
+        dest: /etc/tmpfiles.d/disable-wakeup-events.conf
+        content: |
+          w+ /proc/acpi/wakeup - - - - RP01
+          w+ /proc/acpi/wakeup - - - - RP09
+          w+ /proc/acpi/wakeup - - - - RP13
+
