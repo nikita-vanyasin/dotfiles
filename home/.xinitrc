@@ -9,4 +9,4 @@ xmodmap ~/.Xmodmap
 deviceID=$(xinput --list  | grep -i trackpoint | awk '{print $6}' | awk -F "="  '{print $2}')
 xinput --set-prop $deviceID 'libinput Accel Speed' -0.4
 
-exec dbus-launch i3 --shmlog-size=26214400 -d all 
+exec dbus-launch i3 --shmlog-size=26214400 -d all

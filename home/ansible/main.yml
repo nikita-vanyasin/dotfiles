@@ -41,6 +41,7 @@
           - dmenu
           - pango
           - ttf-dejavu
+          - noto-fonts-emoji
           - zenity
           - thunderbird
           - xdg-utils
@@ -56,8 +57,8 @@
           - pipewire-pulse
           - pipewire-alsa
           - bluez
-          - bluez-utils
           - blueman
+          - bluez-hid2hci
           - ntfs-3g
           - udiskie
           - docker
@@ -93,11 +94,16 @@
           - keepassxc
           - peek
           - micro
-          - pulseeffects
+          - easyeffects
+          - tmux
+          - fprintd
+          - sof-firmware
+          - python-pydbus
+          - python-gobject
     - name: AUR packages
       aur:
         name:
-          - rxvt-unicode-patched
+          - rxvt-unicode-patched-with-scrolling
           - xinit-xsession
           - networkmanager-dispatcher-chrony
           - j4-dmenu-desktop-git
@@ -191,21 +197,48 @@
         content: |
           #!/bin/bash
           # {{ gen_warning }}
-          INPUT_DEVICE="'Capture'"
+          INPUT_DEVICE_1="'Capture'"
+          INPUT_DEVICE_2="'Dmic0'"
           LED_BRIGHTNESS="/sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
-          if amixer sget $INPUT_DEVICE,0 | grep '\[on\]' ; then
+          if amixer sget -c0 $INPUT_DEVICE_1,0 | grep '\[on\]' ; then
               if [ "$1" != "update_led_only" ]; then
-                  amixer sset $INPUT_DEVICE,0 nocap
+                  amixer sset -c0 $INPUT_DEVICE_1,0 nocap
+                  amixer sset -c0 $INPUT_DEVICE_2,0 nocap
               fi
               echo "1" > $LED_BRIGHTNESS
           else
               if [ "$1" != "update_led_only" ]; then
-                  amixer sset $INPUT_DEVICE,0 cap
+                  amixer sset -c0 $INPUT_DEVICE_1,0 cap
+                  amixer sset -c0 $INPUT_DEVICE_2,0 cap
               fi
               echo "0" > $LED_BRIGHTNESS
           fi
         dest: /etc/acpi/lenovo-mutemic.sh
         mode: 0777
+    - name: Add bluetooth key event handler. It actually fires after bluetooth state updated
+      copy:
+        content: |
+          # {{ gen_warning }}
+          event=ibm/hotkey HKEY 00000080 00001314
+          action=/etc/acpi/lenovo-bluetooth.sh
+        dest: /etc/acpi/events/lenovo-bluetooth
+    - name: Add bluetooth control script
+      copy:
+        content: |
+          #!/bin/bash         
+          # {{ gen_warning }}
+          SYSFS="/sys/devices/platform/thinkpad_acpi/bluetooth_enable"
+          case "$(cat "$SYSFS")" in                                                                                                                                                            
+            1)                                                                                                                                                                                 
+              sleep 3s
+              bluetoothctl power on
+              ;;                                                                                                                                                                               
+            0)                     
+              bluetoothctl power off
+              ;;                                                                                                                                                                               
+          esac
+        dest: /etc/acpi/lenovo-bluetooth.sh
+        mode: 0777    
     - name: Enable and start acpid service
       systemd:
         enabled: yes
@@ -264,11 +297,6 @@
           /dev/nvme0n1p3    /mnt/windows    ntfs    defaults,rw
     - name: Apply fstab updates
       command: mount -a
-    - name: Add Windows fonts
-      file:
-        src: /mnt/windows/Windows/Fonts
-        dest: /usr/share/fonts/WindowsFonts
-        state: link
     - name: Update Font cache
       command: fc-cache -f
     - name: Add more power-saving options
@@ -278,6 +306,12 @@
         content: |
           kernel.nmi_watchdog = 0
           vm.dirty_writeback_centisecs = 6000
+    - name: Fix backlight keys scan codes
+      blockinfile:
+        path: /etc/sysctl.d/backlight.conf
+        create: yes
+        content: |
+          kernel.acpi_brightness = vendor
     - name: Allow users to build Golang sources
       file:
         path: /usr/lib/go/pkg

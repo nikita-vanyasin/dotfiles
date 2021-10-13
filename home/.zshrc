@@ -39,7 +39,7 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 
 # PATH updates:
-export PATH=$HOME/scripts:$GOBIN:$PATH
+export PATH=$PATH:$GOBIN:$HOME/scripts::$HOME/.local/bin
 
 # other tools
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"

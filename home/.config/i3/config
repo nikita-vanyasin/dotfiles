@@ -191,6 +191,7 @@ exec --no-startup-id hsetroot -solid "#000000"
 exec google-chrome-stable
 exec thunderbird
 exec --no-startup-id udiskie -t
+exec --no-startup-id blueman-applet
 exec --no-startup-id telegram-desktop -startintray
 exec --no-startup-id safeeyes
 exec --no-startup-id ~/scripts/toggle-touchpad.sh
