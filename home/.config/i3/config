@@ -163,8 +163,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10 && dunstify -r 6661 `xbacklight -get`"
-bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 10 && dunstify -r 6661 `xbacklight -get`"
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 5 && dunstify -r 6661 `xbacklight -get`"
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 5 && dunstify -r 6661 `xbacklight -get`"
 
 # PrtScr btn
 bindsym --release Print exec flameshot gui
@@ -184,12 +184,12 @@ default_border normal 1px
 default_floating_border normal 1px
 
 # Auto-start
-exec --no-startup-id picom -CGb
+exec --no-startup-id picom -CGb --no-fading-openclose
 exec --no-startup-id pulseeffects --gapplication-service
 exec --no-startup-id ~/scripts/i3-battery-popup -L 14 -t 3m -N
 exec --no-startup-id hsetroot -solid "#000000"
-exec google-chrome-stable
-exec thunderbird
+# exec google-chrome-stable
+# exec thunderbird
 exec --no-startup-id udiskie -t
 exec --no-startup-id blueman-applet
 exec --no-startup-id telegram-desktop -startintray

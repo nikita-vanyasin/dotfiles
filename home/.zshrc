@@ -29,9 +29,8 @@ alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
 alias dev-breezzly='cd ~/go/src/gitlab.com/nikita-vanyasin/breezzly'
-alias dev-cloudradar='cd ~/go/src/github.com/cloudradar-monitoring'
 alias dev-gostr='cd ~/go/src/github.com/nikita-vanyasin/gostr'
-alias dev-rport='cd ~/projects/cloudradar-monitoring/rport'
+alias dev-arango='cd ~/go/src/github.com/arangodb'
 alias drive='cd ~/Desktop/GOOGLE'
 alias dis='cd ~/Desktop/GOOGLE/аспирант/disser'
 
@@ -51,3 +50,4 @@ unsetopt LIST_BEEP
 
 
 export TERMINAL="urxvt >> /tmp/urxvt-my.log"
+[[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
