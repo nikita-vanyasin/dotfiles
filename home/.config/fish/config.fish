@@ -1,5 +1,7 @@
 
 set -U fish_greeting
+set fish_color_valid_path
+set fish_prompt_pwd_dir_length 0
 
 # Start X at login
 if status is-login

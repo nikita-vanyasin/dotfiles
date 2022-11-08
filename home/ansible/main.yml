@@ -99,6 +99,7 @@
           - sof-firmware
           - python-pydbus
           - python-gobject
+          - fd
     - name: AUR packages
       aur:
         name:
