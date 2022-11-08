@@ -1,7 +1,0 @@
-
-robbyrussell/oh-my-zsh path:lib
-robbyrussell/oh-my-zsh path:themes/robbyrussell.zsh-theme
-
-robbyrussell/oh-my-zsh path:plugins/copyfile
-robbyrussell/oh-my-zsh path:plugins/web-search
-

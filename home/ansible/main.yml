@@ -25,6 +25,7 @@
       pacman:
         update_cache: yes
         name:
+          - fish
           - mc
           - zip
           - tree
@@ -85,8 +86,6 @@
           - pavucontrol
           - vlc
           - sof-firmware
-          #- texlive-most
-          #- gummi
           - inkscape
           - soundfont-fluid
           - xautolock
@@ -109,16 +108,13 @@
           - pulseaudio-ctl
           - flameshot-git
           - jetbrains-toolbox
-          #- safeeyes
           - google-chrome
-          #- watson
-          - antibody
           - pinta-git
           #- grive-git
           - xkb-switch
           #- virtualbox-ext-oracle
           - vlc-plugin-fluidsynth
-#          - mycrypto-bin
+          # - mycrypto-bin
         skip_installed: yes
       become: yes
       become_user: aur_builder
@@ -271,10 +267,6 @@
         name: tlp
       tags:
         - tlp
-    - name: Update zsh plugins
-      become: yes
-      become_user: "{{ local_user }}"
-      command: "{{ local_home }}/scripts/update_zsh_plugins.sh"
     - name: Enable periodic TRIM on SSD devices
       systemd:
         enabled: yes
