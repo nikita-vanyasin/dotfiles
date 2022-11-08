@@ -38,18 +38,5 @@ Xft.hintstyle:              hintslight
 *.color7:      #c0c5ce
 *.color15:     #eff1f5
 
-URxvt*scrollBar:         true
-URxvt*scrollBar_right:   true
-
-URxvt*transparent:       false
-
-URxvt*font: xft:Consolas:pixelsize=20
-URxvt*letterSpace: 0
-
-Rxvt.perl-ext-common: default,matcher
-URxvt.url-launcher: /usr/bin/xdg-open
-URxvt.matcher.button: 1
-
 *antialias:  true
 *autohint:   true
-

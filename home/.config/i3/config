@@ -193,13 +193,11 @@ exec --no-startup-id hsetroot -solid "#000000"
 exec --no-startup-id udiskie -t
 exec --no-startup-id blueman-applet
 exec --no-startup-id telegram-desktop -startintray
-exec --no-startup-id safeeyes
+# exec --no-startup-id safeeyes
 exec --no-startup-id ~/scripts/toggle-touchpad.sh
-exec --no-startup-id xautolock -detectsleep -corners -000 -cornersize 45 -time 20 -locker "systemctl suspend" -notify 10 -notifier "dunstify 'Suspend in 10 sec!'"
+exec --no-startup-id xautolock -detectsleep -corners -000 -cornersize 45 -time 15 -locker "systemctl suspend" -notify 10 -notifier "dunstify 'Suspend in 10 sec!'"
 
 
-for_window [class="upwork"] floating enable
-assign [class="Thunderbird"] 2
 
 
 

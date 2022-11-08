@@ -28,14 +28,15 @@ promptinit
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
-alias dev-breezzly='cd ~/go/src/gitlab.com/nikita-vanyasin/breezzly'
-alias dev-gostr='cd ~/go/src/github.com/nikita-vanyasin/gostr'
+alias dev-breezzly='cd ~/go/src/gitlab.com/breezzly/breezzly'
+alias dev-gostr='cd ~/projects/gostr'
 alias dev-arango='cd ~/go/src/github.com/arangodb'
 alias drive='cd ~/Desktop/GOOGLE'
 alias dis='cd ~/Desktop/GOOGLE/аспирант/disser'
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
+export GOPRIVATE=github.com/arangodb
 
 # PATH updates:
 export PATH=$PATH:$GOBIN:$HOME/scripts::$HOME/.local/bin
@@ -49,5 +50,7 @@ unsetopt BEEP
 unsetopt LIST_BEEP
 
 
-export TERMINAL="urxvt >> /tmp/urxvt-my.log"
+export TERMINAL="alacritty >> /tmp/alacritty-my.log"
 [[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
+[[ /usr/bin/helm ]] && source <(helm completion zsh)
+

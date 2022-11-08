@@ -85,8 +85,8 @@
           - pavucontrol
           - vlc
           - sof-firmware
-          - texlive-most
-          - gummi
+          #- texlive-most
+          #- gummi
           - inkscape
           - soundfont-fluid
           - xautolock
@@ -103,22 +103,22 @@
     - name: AUR packages
       aur:
         name:
-          - rxvt-unicode-patched-with-scrolling
           - xinit-xsession
           - networkmanager-dispatcher-chrony
-          - j4-dmenu-desktop-git
+          #- j4-dmenu-desktop-git
           - pulseaudio-ctl
           - flameshot-git
           - jetbrains-toolbox
-          - safeeyes
+          #- safeeyes
           - google-chrome
-          - watson
+          #- watson
           - antibody
           - pinta-git
-          - grive-git
+          #- grive-git
           - xkb-switch
-          - virtualbox-ext-oracle
+          #- virtualbox-ext-oracle
           - vlc-plugin-fluidsynth
+#          - mycrypto-bin
         skip_installed: yes
       become: yes
       become_user: aur_builder
