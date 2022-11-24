@@ -26,6 +26,7 @@
         update_cache: yes
         name:
           - fish
+          - fisher
           - mc
           - zip
           - tree
@@ -116,6 +117,8 @@
           #- virtualbox-ext-oracle
           - vlc-plugin-fluidsynth
           # - mycrypto-bin
+          - fish-fishtape
+          - fish-done
         skip_installed: yes
       become: yes
       become_user: aur_builder
