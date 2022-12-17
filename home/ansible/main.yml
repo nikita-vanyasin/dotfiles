@@ -74,7 +74,7 @@
           - kubectl
           - k9s
           - acpi
-          - acpid # TODO: can be replaced with systemd probably
+          - acpid
           - tlp
           - acpi_call
           - ethtool
@@ -82,6 +82,9 @@
           - pavucontrol
           - vlc
           - sof-firmware
+          - intel-media-driver
+          - libva-intel-driver
+          - libva-utils
             #- soundfont-fluid
             #- moreutils
           - grim  # required for flameshot
@@ -97,6 +100,12 @@
           - python-pexpect # required for some ansible modules
           - telegram-desktop
           - ntfs-3g
+          # <zoom-workaround>
+          # zoom does not support screensharing on wayland https://support.zoom.us/hc/en-us/articles/6634039380877-Sharing-your-screen-on-Wayland
+          # workaround: using virtual camera
+          - v4l2loopback-dkms
+          - obs-studio
+          # </zoom-workaround>
     - name: AUR packages
       aur:
         name:
@@ -111,6 +120,8 @@
           - xdg-desktop-portal-wlr-git # required for flameshot
           - dmenu-wayland-git
           - zoom
+          # optional kernel modules 
+          - upd72020x-fw # xhci_pci
         state: present
       become: yes
       become_user: aur_builder
@@ -186,7 +197,7 @@
     - name: Enable and start tlp service
       systemd:
         enabled: yes
-        state: started # TODO: started
+        state: started
         name: tlp
       tags:
         - tlp
@@ -232,14 +243,7 @@
         create: yes
         content: |
           ACTION=="bind", SUBSYSTEM=="hid", ENV{HID_ID}="0018:000004F3:00002C4E", RUN+="/bin/bash -c 'basename $DEVPATH > /sys/bus/hid/drivers/hid-multitouch/unbind'"
-    #- name: Kernel modules blacklist
-      #blockinfile:
-        #path: /etc/modprobe.d/blacklist.conf
-        #create: yes
-#        content: |
-#blacklist snd_hda_intel
-# blacklist snd_soc_skl
-      #- name: Disable some wake-from-suspend events
+    #- name: Disable some wake-from-suspend events
       #copy:
           #dest: /etc/tmpfiles.d/disable-wakeup-events.conf
           #content: |

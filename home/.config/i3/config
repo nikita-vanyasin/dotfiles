@@ -8,34 +8,24 @@ font pango:DejaVu Sans Mono 13
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+
+
 # start a terminal
 bindsym $mod+Return exec alacritty
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym --to-code $mod+Shift+q kill
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id dmenu-wl_run -i -h 27
+bindsym --to-code $mod+d exec --no-startup-id dmenu-wl_run -i -h 27
 
 focus_follows_mouse no
-
-# change focus
-#bindsym $mod+j focus left
-#bindsym $mod+k focus down
-#bindsym $mod+l focus up
-#bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
-# move focused window
-#bindsym $mod+Shift+j move left
-#bindsym $mod+Shift+k move down
-#bindsym $mod+Shift+l move up
-#bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -44,18 +34,18 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym --to-code $mod+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym --to-code $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym --to-code $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym --to-code $mod+s layout stacking
+bindsym --to-code $mod+w layout tabbed
+bindsym --to-code $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -64,10 +54,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym --to-code $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+#bindsym --to-code $mod+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -94,19 +84,19 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym --to-code $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym --to-code $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exit
+bindsym --to-code $mod+Shift+e exit
 
 # lock screen
-bindsym $mod+Shift+l exec "~/scripts/lock-screen.sh"
+bindsym --to-code $mod+Shift+l exec "~/scripts/lock-screen.sh"
 
 # suspend
-bindsym $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
+bindsym --to-code $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -116,12 +106,6 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
@@ -132,7 +116,7 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym --to-code $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -144,9 +128,6 @@ bar {
         modifier $mod
 
         status_command py3status --config ~/.config/i3/status.conf
-        #tray_output primary
-        #output primary
-        #tray_padding 1
         separator_symbol " | "
 
         colors {
@@ -155,11 +136,6 @@ bar {
 
         icon_theme "Adwaita"
 }
-
-#bar {
-#    output HDMI-1-1
-#    tray_output primary
-#}
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -175,7 +151,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -s set 5%- && 
 bindsym --release Print exec flameshot gui
 
 # Toogle touchpad
-bindsym $mod+t input type:touchpad events toggle enabled disabled
+bindsym --to-code $mod+t input type:touchpad events toggle enabled disabled
 
 workspace_layout stacking
 
