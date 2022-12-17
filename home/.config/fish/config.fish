@@ -3,11 +3,13 @@ set -U fish_greeting
 set fish_color_valid_path
 set fish_prompt_pwd_dir_length 0
 
-# Start X at login
 if status is-login
-    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-        exec startx -- -keeptty
-    end
+    export SDL_VIDEODRIVER=wayland
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export QT_QPA_PLATFORM=wayland
+    export XDG_CURRENT_DESKTOP=sway
+    export XDG_SESSION_DESKTOP=sway
+    exec sway
 end
 
 if status is-interactive
@@ -40,7 +42,10 @@ fish_add_path $GOBIN $HOME/scripts $HOME/.local/bin
 source "$HOME/.homesick/repos/homeshick/homeshick.fish"
 
 kubectl completion fish | source
-zutano completion --shell=fish | source
+
+if test -f zutano
+    zutano completion --shell=fish | source
+end
 
 function fish_title
     set -q argv[1]; or set argv fish
