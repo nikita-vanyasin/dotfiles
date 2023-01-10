@@ -326,7 +326,7 @@ DEVICES_TO_ENABLE_ON_STARTUP="wifi bluetooth"
 # Main / Internal battery (values in %)
 # Default: <none>
 START_CHARGE_THRESH_BAT0=75
-STOP_CHARGE_THRESH_BAT0=90
+STOP_CHARGE_THRESH_BAT0=85
 # Ultrabay / Slice / Replaceable battery (values in %)
 # Default: <none>
 #START_CHARGE_THRESH_BAT1=75

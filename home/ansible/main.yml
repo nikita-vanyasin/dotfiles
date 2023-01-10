@@ -50,6 +50,7 @@
           - py3status
           - ttf-dejavu
           - ttf-opensans
+          - ttf-liberation
           - pango
           - noto-fonts-emoji # TODO: install source code pro
           - zenity
@@ -85,8 +86,6 @@
           - intel-media-driver
           - libva-intel-driver
           - libva-utils
-            #- soundfont-fluid
-            #- moreutils
           - grim  # required for flameshot
           - micro
           - easyeffects 
@@ -98,14 +97,19 @@
           - brightnessctl
           - vulkan-intel # google-chrome optional
           - python-pexpect # required for some ansible modules
+          - python-pydbus # required for some py3status modules
           - telegram-desktop
           - ntfs-3g
+          - thunderbird
           # <zoom-workaround>
           # zoom does not support screensharing on wayland https://support.zoom.us/hc/en-us/articles/6634039380877-Sharing-your-screen-on-Wayland
           # workaround: using virtual camera
           - v4l2loopback-dkms
           - obs-studio
           # </zoom-workaround>
+          # <steam>
+          - steam
+          # </steam>
     - name: AUR packages
       aur:
         name:
@@ -116,7 +120,6 @@
           - google-chrome
           - fish-fishtape
           - fish-done
-          - mailspring
           - xdg-desktop-portal-wlr-git # required for flameshot
           - dmenu-wayland-git
           - zoom
@@ -226,6 +229,26 @@
         content: |
           kernel.nmi_watchdog = 0
           vm.dirty_writeback_centisecs = 6000
+    - name: Powertop auto-tune service
+      blockinfile:
+        path: /etc/systemd/system/powertop.service
+        create: yes
+        content: |
+          [Unit]
+          Description=Powertop tunings
+          
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/usr/bin/powertop --auto-tune
+          
+          [Install]
+          WantedBy=multi-user.target
+    - name: Enable powertop auto-tune service
+      systemd:
+        enabled: yes
+        state: started
+        name: powertop
     - name: Allow users to build Golang sources
       file:
         path: /usr/lib/go/pkg

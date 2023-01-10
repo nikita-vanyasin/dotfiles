@@ -25,9 +25,7 @@ export DEFAULT_USER=nikita
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
-alias dev-breezzly='cd ~/go/src/gitlab.com/breezzly/breezzly'
-alias dev-gostr='cd ~/projects/gostr'
-alias dev-arango='cd ~/go/src/github.com/arangodb'
+alias dev-arango='cd ~/projects/arangodb'
 alias drive='cd ~/Desktop/GOOGLE'
 
 export GOPATH=$HOME/go
@@ -36,7 +34,7 @@ export GOPRIVATE=github.com/arangodb
 
 # PATH updates:
 
-fish_add_path $GOBIN $HOME/scripts $HOME/.local/bin
+fish_add_path $GOBIN $HOME/scripts $HOME/.local/bin $HOME/.local/share/JetBrains/Toolbox/scripts
 
 
 source "$HOME/.homesick/repos/homeshick/homeshick.fish"
