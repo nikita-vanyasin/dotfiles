@@ -30,7 +30,7 @@ alias drive='cd ~/Desktop/GOOGLE'
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export GOPRIVATE=github.com/arangodb
+export GOPRIVATE=github.com/arangodb,github.com/arangodb-managed
 
 # PATH updates:
 

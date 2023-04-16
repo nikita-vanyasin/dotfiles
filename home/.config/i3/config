@@ -195,6 +195,10 @@ input type:keyboard xkb_numlock enabled
 input type:keyboard xkb_layout us,ru
 input * xkb_options "grp:caps_toggle"
 
+# do not go idle if something is fullscreen:
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+
 # Auto-start
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
@@ -204,10 +208,10 @@ exec --no-startup-id swayidle -w timeout 300 'swaylock -f -c 000000' \
                                  before-sleep 'swaylock -f -c 000000' \
                                  after-resume 'swaymsg input type:keyboard xkb_switch_layout 0'
 
-
+# systemctl start adjust-power-mode.trigger
 # TODO: check and adjust power mode on wake from sleep
-# TODO: also run it on start
 
+exec --no-startup-id ~/scripts/adjust-power-mode.sh
 exec --no-startup-id easyeffects --gapplication-service
 exec --no-startup-id dunst
 exec --no-startup-id ~/scripts/check-battery-popup -L 14 -t 3m -N
@@ -216,3 +220,5 @@ exec --no-startup-id blueman-applet > ~/blueman.log
 exec --no-startup-id /opt/DrataAgent/drata-agent
 exec --no-startup-id google-chrome-stable
 exec --no-startup-id thunderbird
+exec --no-startup-id kdeconnect-indicator
+

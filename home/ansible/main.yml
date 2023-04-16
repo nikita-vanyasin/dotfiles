@@ -27,7 +27,7 @@
         mode: '0755'
     - name: packages
       pacman:
-        update_cache: yes
+        update_cache: no
         name:
           - base-devel
           - fish
@@ -61,6 +61,7 @@
           - htop
           - fwupd
           - wget
+          - rsync
           - pipewire
           - pipewire-pulse
           - pipewire-alsa
@@ -71,6 +72,7 @@
           - udiskie
           - gnome-keyring
           - docker
+          - docker-compose
           - docker-machine
           - kubectl
           - k9s
@@ -101,6 +103,9 @@
           - telegram-desktop
           - ntfs-3g
           - thunderbird
+          - rclone
+          - obsidian
+          - keepassxc
           # <zoom-workaround>
           # zoom does not support screensharing on wayland https://support.zoom.us/hc/en-us/articles/6634039380877-Sharing-your-screen-on-Wayland
           # workaround: using virtual camera
@@ -249,6 +254,44 @@
         enabled: yes
         state: started
         name: powertop
+
+    - name: adjust-power-mode.sh
+      blockinfile:
+        path: /usr/bin/adjust-power-mode.sh
+        mode: u+rwx
+        create: yes
+        content: |
+            #!/bin/sh
+
+            BAT_STATUS=$(cat /sys/class/power_supply/BAT0/status)
+
+            if [[  $BAT_STATUTS -eq 'Discharging' ]]; then
+            	notify-send "Low-power mode set"
+            	echo -n "low-power" > /sys/firmware/acpi/platform_profile
+            else
+            	notify-send "Performance mode set"
+            	echo -n "performance" > /sys/firmware/acpi/platform_profile
+            fi
+    - name: Laptop power mode adjustment
+      blockinfile:
+        path: /etc/systemd/system/adjust-power-mode.service
+        create: yes
+        content: |
+          [Unit]
+          Description=Adjust laptop powermode
+          
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/usr/bin/adjust-power-mode.sh
+          
+          [Install]
+          WantedBy=multi-user.target
+    - name: Enable laptop power mode adjustment
+      systemd:
+        enabled: yes
+        state: started
+        name: adjust-power-mode        
     - name: Allow users to build Golang sources
       file:
         path: /usr/lib/go/pkg
@@ -273,6 +316,13 @@
           #w+ /proc/acpi/wakeup - - - - RP01
           #w+ /proc/acpi/wakeup - - - - RP09
           #w+ /proc/acpi/wakeup - - - - RP13
+    - name: Add fstab entries
+      blockinfile:
+        path: /etc/fstab
+        content: |
+          MYDRIVE:/   /home/nikita/Desktop/GOOGLE    rclone rw,nofail,_netdev,x-systemd.automount,args2env,vfs_cache_mode=writes,allow-other,umask=022,dir-perms=770,file-perms=660,uid=1000,gid=1000,config=/home/nikita/.config/rclone/rclone.conf,cache_dir=/home/nikita/.cache/rclone  0  0
+    - name: Apply fstab updates
+      command: mount -a
     - name: Install easyeffects presets
       ansible.builtin.git:
         repo: https://github.com/JackHack96/EasyEffects-Presets.git
