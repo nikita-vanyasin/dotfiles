@@ -1,5 +1,7 @@
 {
     "Alt-/": "lua:comment.comment",
     "Ctrl-y": "DeleteLine",
-    "CtrlUnderscore": "lua:comment.comment"
+    "CtrlUnderscore": "lua:comment.comment",
+    "Alt-W": "command:set wordwrap off,command:set softwrap off",
+    "Alt-w": "command:set wordwrap on,command:set softwrap on",
 }

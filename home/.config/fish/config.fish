@@ -22,28 +22,31 @@ export EDITOR="micro"
 export DEFAULT_USER=nikita
 
 
+# completions
+kubectl completion fish | source
+k9s completion fish | source
+if test -f zutano
+    zutano completion --shell=fish | source
+end
+
+# aliases
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
 alias dev-arango='cd ~/projects/arangodb'
 alias drive='cd ~/Desktop/GOOGLE'
+alias k9s='k9s --headless'
+alias cb='xclip -selection clipboard'
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOPRIVATE=github.com/arangodb,github.com/arangodb-managed
 
 # PATH updates:
-
 fish_add_path $GOBIN $HOME/scripts $HOME/.local/bin $HOME/.local/share/JetBrains/Toolbox/scripts
 
 
 source "$HOME/.homesick/repos/homeshick/homeshick.fish"
-
-kubectl completion fish | source
-
-if test -f zutano
-    zutano completion --shell=fish | source
-end
 
 function fish_title
     set -q argv[1]; or set argv fish

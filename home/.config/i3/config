@@ -199,12 +199,24 @@ input * xkb_options "grp:caps_toggle"
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
 
+# telegram context menu
+for_window [app_id="telegram" title="^TelegramDesktop$"] border none, floating enable
+
+# fix Zoom
+for_window [app_id="zoom" title="^zoom$"] border none, floating enable
+# For specific Zoom windows
+for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
+for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+# Open Zoom Meeting windows on a new workspace (a bit hacky)
+# for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
+
+
 # Auto-start
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec --no-startup-id swayidle -w timeout 300 'swaylock -f -c 000000' \
-                                 timeout 900 'systemctl suspend' \
+exec --no-startup-id swayidle -w timeout 900 'swaylock -f -c 000000' \
+                                 timeout 1500 'systemctl suspend' \
                                  before-sleep 'swaylock -f -c 000000' \
                                  after-resume 'swaymsg input type:keyboard xkb_switch_layout 0'
 
@@ -217,7 +229,7 @@ exec --no-startup-id dunst
 exec --no-startup-id ~/scripts/check-battery-popup -L 14 -t 3m -N
 exec --no-startup-id udiskie -t
 exec --no-startup-id blueman-applet > ~/blueman.log
-exec --no-startup-id /opt/DrataAgent/drata-agent
+#exec --no-startup-id /opt/DrataAgent/drata-agent
 exec --no-startup-id google-chrome-stable
 exec --no-startup-id thunderbird
 exec --no-startup-id kdeconnect-indicator

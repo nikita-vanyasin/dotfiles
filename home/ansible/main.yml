@@ -33,6 +33,7 @@
           - fish
           - fisher
           - fzf
+          - inetutils
           - mc
           - zip
           - tree
@@ -104,17 +105,21 @@
           - ntfs-3g
           - thunderbird
           - rclone
+          - electrum
           - obsidian
           - keepassxc
+          - bind
+          - yank
+          - navi # navi
+          - rust # Ctrl+G
+          - up # | up
           # <zoom-workaround>
           # zoom does not support screensharing on wayland https://support.zoom.us/hc/en-us/articles/6634039380877-Sharing-your-screen-on-Wayland
           # workaround: using virtual camera
           - v4l2loopback-dkms
           - obs-studio
-          # </zoom-workaround>
           # <steam>
           - steam
-          # </steam>
     - name: AUR packages
       aur:
         name:
@@ -130,6 +135,7 @@
           - zoom
           # optional kernel modules 
           - upd72020x-fw # xhci_pci
+          - git-interactive-rebase-tool-bin
         state: present
       become: yes
       become_user: aur_builder
@@ -316,13 +322,6 @@
           #w+ /proc/acpi/wakeup - - - - RP01
           #w+ /proc/acpi/wakeup - - - - RP09
           #w+ /proc/acpi/wakeup - - - - RP13
-    - name: Add fstab entries
-      blockinfile:
-        path: /etc/fstab
-        content: |
-          MYDRIVE:/   /home/nikita/Desktop/GOOGLE    rclone rw,nofail,_netdev,x-systemd.automount,args2env,vfs_cache_mode=writes,allow-other,umask=022,dir-perms=770,file-perms=660,uid=1000,gid=1000,config=/home/nikita/.config/rclone/rclone.conf,cache_dir=/home/nikita/.cache/rclone  0  0
-    - name: Apply fstab updates
-      command: mount -a
     - name: Install easyeffects presets
       ansible.builtin.git:
         repo: https://github.com/JackHack96/EasyEffects-Presets.git
