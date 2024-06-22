@@ -25,15 +25,11 @@ export DEFAULT_USER=nikita
 # completions
 kubectl completion fish | source
 k9s completion fish | source
-if test -f zutano
-    zutano completion --shell=fish | source
-end
 
 # aliases
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
-alias dev-arango='cd ~/projects/arangodb'
 alias drive='cd ~/Desktop/GOOGLE'
 alias k9s='k9s --headless'
 alias cb='xclip -selection clipboard'

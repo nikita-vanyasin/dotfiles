@@ -103,7 +103,6 @@
           - python-pydbus # required for some py3status modules
           - telegram-desktop
           - ntfs-3g
-          - thunderbird
           - rclone
           - electrum
           - obsidian
@@ -118,8 +117,7 @@
           # workaround: using virtual camera
           - v4l2loopback-dkms
           - obs-studio
-          # <steam>
-          - steam
+          - kdeconnect
     - name: AUR packages
       aur:
         name:
@@ -136,6 +134,8 @@
           # optional kernel modules 
           - upd72020x-fw # xhci_pci
           - git-interactive-rebase-tool-bin
+          - wdisplays
+          - betterbird
         state: present
       become: yes
       become_user: aur_builder

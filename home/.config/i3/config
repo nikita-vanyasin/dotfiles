@@ -188,6 +188,7 @@ default_border normal 1px
 default_floating_border normal 1px
 
 output * bg #000000 solid_color
+output HDMI-A-1 scale 0.8
 
 input type:touchpad events disabled
 input type:keyboard xkb_numlock enabled
@@ -231,6 +232,7 @@ exec --no-startup-id udiskie -t
 exec --no-startup-id blueman-applet > ~/blueman.log
 #exec --no-startup-id /opt/DrataAgent/drata-agent
 exec --no-startup-id google-chrome-stable
-exec --no-startup-id thunderbird
+exec --no-startup-id betterbird
+exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id kdeconnect-indicator
 
