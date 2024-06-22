@@ -69,8 +69,8 @@ MAX_LOST_WORK_SECS_ON_BAT=60
 # Values are given in order of increasing power saving.
 # Note: Intel Skylake or newer CPU and Kernel >= 4.10 required.
 # Default: <none>
-CPU_HWP_ON_AC=balance_performance
-CPU_HWP_ON_BAT=balance_power
+#CPU_HWP_ON_AC=balance_performance
+#CPU_HWP_ON_BAT=balance_power
 
 # Set Intel P-state performance: 0..100 (%).
 # Limit the max/min P-state to control the power dissipation of the CPU.
@@ -94,8 +94,8 @@ CPU_HWP_ON_BAT=balance_power
 # Minimize number of used CPU cores/hyper-threads under light load conditions:
 #   0=disable, 1=enable.
 # Default: <none>
-SCHED_POWERSAVE_ON_AC=0
-SCHED_POWERSAVE_ON_BAT=1
+#SCHED_POWERSAVE_ON_AC=0
+#SCHED_POWERSAVE_ON_BAT=1
 
 # Kernel NMI Watchdog:
 #   0=disable (default, saves power), 1=enable (for kernel debugging only).
@@ -114,8 +114,8 @@ NMI_WATCHDOG=0
 # Values are given in order of increasing power saving.
 # Requires kernel module msr and x86_energy_perf_policy from linux-tools.
 # Default: <none>
-ENERGY_PERF_POLICY_ON_AC=performance
-ENERGY_PERF_POLICY_ON_BAT=power
+#ENERGY_PERF_POLICY_ON_AC=performance
+#ENERGY_PERF_POLICY_ON_BAT=power
 
 # Disk devices; separate multiple devices with spaces.
 # Devices can be specified by disk ID also (lookup with: tlp diskid).
@@ -163,8 +163,8 @@ DISK_DEVICES="nvme0n1 sda"
 # (*) Kernel >= 4.15 required, then recommended.
 # Multiple values separated with spaces are tried sequentially until success.
 # Default: <none>
-SATA_LINKPWR_ON_AC="med_power_with_dipm max_performance"
-SATA_LINKPWR_ON_BAT="med_power_with_dipm min_power"
+#SATA_LINKPWR_ON_AC="med_power_with_dipm max_performance"
+#SATA_LINKPWR_ON_BAT="med_power_with_dipm min_power"
 
 # Exclude host devices from AHCI link power management.
 # Separate multiple hosts with spaces.
@@ -181,7 +181,7 @@ SATA_LINKPWR_ON_BAT="med_power_with_dipm min_power"
 # Seconds of inactivity before disk is suspended.
 # Note: effective only when AHCI_RUNTIME_PM_ON_AC/BAT is activated.
 # Default: 15
-AHCI_RUNTIME_PM_TIMEOUT=15
+#AHCI_RUNTIME_PM_TIMEOUT=15
 
 # PCI Express Active State Power Management (PCIe ASPM):
 #   default(*), performance, powersave.
@@ -201,23 +201,6 @@ AHCI_RUNTIME_PM_TIMEOUT=15
 #INTEL_GPU_BOOST_FREQ_ON_AC=0
 #INTEL_GPU_BOOST_FREQ_ON_BAT=0
 
-# Radeon graphics clock speed (profile method): low, mid, high, auto, default;
-# auto = mid on BAT, high on AC.
-# Default: default
-#RADEON_POWER_PROFILE_ON_AC=default
-#RADEON_POWER_PROFILE_ON_BAT=default
-
-# Radeon dynamic power management method (DPM): battery, performance.
-# Default: <none>
-#RADEON_DPM_STATE_ON_AC=performance
-#RADEON_DPM_STATE_ON_BAT=battery
-
-# Radeon DPM performance level: auto, low, high; auto is recommended.
-# Note: effective only when RADEON_DPM_STATE_ON_AC/BAT is activated.
-# Default: auto
-#RADEON_DPM_PERF_LEVEL_ON_AC=auto
-#RADEON_DPM_PERF_LEVEL_ON_BAT=auto
-
 # WiFi power saving mode: on=enable, off=disable; not supported by all adapters.
 # Default: <none>
 WIFI_PWR_ON_AC=off
@@ -230,24 +213,13 @@ WOL_DISABLE=Y
 # Enable audio power saving for Intel HDA, AC97 devices (timeout in secs).
 # A value of 0 disables, >=1 enables power saving (recommended: 1).
 # Default: <none>
-SOUND_POWER_SAVE_ON_AC=1
+SOUND_POWER_SAVE_ON_AC=0
 SOUND_POWER_SAVE_ON_BAT=1
 
 # Disable controller too (HDA only): Y/N.
 # Note: effective only when SOUND_POWER_SAVE_ON_AC/BAT is activated.
 # Default: Y
 SOUND_POWER_SAVE_CONTROLLER=Y
-
-# Power off optical drive in UltraBay/MediaBay: 0=disable, 1=enable.
-# Drive can be powered on again by releasing (and reinserting) the eject lever
-# or by pressing the disc eject button on newer models.
-# Note: an UltraBay/MediaBay hard disk is never powered off.
-# Default: 0
-BAY_POWEROFF_ON_AC=0
-BAY_POWEROFF_ON_BAT=0
-# Optical drive device to power off
-# Default: sr0
-BAY_DEVICE="sr0"
 
 # Runtime Power Management for PCI(e) bus devices: on=disable, auto=enable.
 # Default: <none>
@@ -275,7 +247,7 @@ USB_AUTOSUSPEND=1
 # Use lsusb to get the ids.
 # Note: input devices (usbhid) are excluded automatically
 # Default: <none>
-USB_BLACKLIST="06cb:00bd"
+USB_BLACKLIST=
 
 # Bluetooth devices are excluded from USB autosuspend:
 #   0=do not exclude, 1=exclude.
@@ -323,7 +295,7 @@ DEVICES_TO_DISABLE_ON_STARTUP="wwan"
 # Radio devices to enable on startup: bluetooth, wifi, wwan.
 # Separate multiple devices with spaces.
 # Default: <none>
-DEVICES_TO_ENABLE_ON_STARTUP="wifi"
+DEVICES_TO_ENABLE_ON_STARTUP="wifi bluetooth"
 
 # Radio devices to disable on shutdown: bluetooth, wifi, wwan.
 # (workaround for devices that are blocking shutdown).
@@ -354,7 +326,7 @@ DEVICES_TO_ENABLE_ON_STARTUP="wifi"
 # Main / Internal battery (values in %)
 # Default: <none>
 START_CHARGE_THRESH_BAT0=75
-STOP_CHARGE_THRESH_BAT0=100
+STOP_CHARGE_THRESH_BAT0=85
 # Ultrabay / Slice / Replaceable battery (values in %)
 # Default: <none>
 #START_CHARGE_THRESH_BAT1=75

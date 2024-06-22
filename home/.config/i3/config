@@ -1,41 +1,45 @@
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+include colorscheme
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.unfocused        $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.focused          $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+
+# End colors config
+
+
 set $mod Mod4
 
-font pango:DejaVu Sans Mono 10
+font pango:DejaVu Sans Mono 13
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+
+
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym --to-code $mod+Shift+q kill
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id ~/scripts/my-dmenu.sh
+bindsym --to-code $mod+d exec --no-startup-id dmenu-wl_run -i -h 27
 
 focus_follows_mouse no
-
-# change focus
-#bindsym $mod+j focus left
-#bindsym $mod+k focus down
-#bindsym $mod+l focus up
-#bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
-# move focused window
-#bindsym $mod+Shift+j move left
-#bindsym $mod+Shift+k move down
-#bindsym $mod+Shift+l move up
-#bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -44,18 +48,18 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym --to-code $mod+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym --to-code $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym --to-code $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym --to-code $mod+s layout stacking
+bindsym --to-code $mod+w layout tabbed
+bindsym --to-code $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -64,10 +68,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym --to-code $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+#bindsym --to-code $mod+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -94,19 +98,19 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym --to-code $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym --to-code $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "zenity --question --text 'DO YOU WANT TO LOGOUT? This will end your X session.' --ok-label 'Logout' --cancel-label 'Cancel' && i3-msg exit"
+bindsym --to-code $mod+Shift+e exit
 
 # lock screen
-bindsym $mod+Shift+l exec "~/scripts/lock-screen.sh"
+bindsym --to-code $mod+Shift+l exec "~/scripts/lock-screen.sh"
 
 # suspend
-bindsym $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
+bindsym --to-code $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -116,12 +120,6 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
@@ -132,50 +130,56 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym --to-code $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        font pango:DejaVu Sans Mono 13
+
         mode hide
         hidden_state hide
         modifier $mod
 
         status_command py3status --config ~/.config/i3/status.conf
-        tray_output primary
-        output primary
-        tray_padding 1
         separator_symbol " | "
 
         colors {
-                separator #444444
-        }
-}
+		    background $base00
+		    separator  $base01
+		    statusline $base05
 
-bar {
-    output HDMI-1-1
-    tray_output primary
+		    # State             Border  BG      Text
+		    focused_workspace   $base05 $base0D $base00
+		    active_workspace    $base05 $base03 $base00
+		    inactive_workspace  $base03 $base01 $base05
+		    urgent_workspace    $base08 $base08 $base00
+		    binding_mode        $base00 $base0A $base00
+		}
+
+        icon_theme "Adwaita"
 }
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 5 && dunstify -r 6661 `xbacklight -get`"
-bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 5 && dunstify -r 6661 `xbacklight -get`"
+bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl -s set 5%+ && dunstify -r 6661 $(brightnessctl -m | cut -d, -f4)"
+bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl -s set 5%- && dunstify -r 6661 $(brightnessctl -m | cut -d, -f4)"
 
 # PrtScr btn
 bindsym --release Print exec flameshot gui
 
 # Toogle touchpad
-bindsym $mod+t exec ~/scripts/toggle-touchpad.sh
+bindsym --to-code $mod+t input type:touchpad events toggle enabled disabled
 
 workspace_layout stacking
 
-new_window none
-new_float none
+default_border none
+default_floating_border none
 
 hide_edge_borders smart
 workspace_auto_back_and_forth yes
@@ -183,25 +187,52 @@ workspace_auto_back_and_forth yes
 default_border normal 1px
 default_floating_border normal 1px
 
+output * bg #000000 solid_color
+output HDMI-A-1 scale 0.8
+
+input type:touchpad events disabled
+input type:keyboard xkb_numlock enabled
+
+input type:keyboard xkb_layout us,ru
+input * xkb_options "grp:caps_toggle"
+
+# do not go idle if something is fullscreen:
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+
+# telegram context menu
+for_window [app_id="telegram" title="^TelegramDesktop$"] border none, floating enable
+
+# fix Zoom
+for_window [app_id="zoom" title="^zoom$"] border none, floating enable
+# For specific Zoom windows
+for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
+for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+# Open Zoom Meeting windows on a new workspace (a bit hacky)
+# for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
+
+
 # Auto-start
-exec --no-startup-id picom -CGb --no-fading-openclose
-exec --no-startup-id pulseeffects --gapplication-service
-exec --no-startup-id ~/scripts/i3-battery-popup -L 14 -t 3m -N
-exec --no-startup-id hsetroot -solid "#000000"
-# exec google-chrome-stable
-# exec thunderbird
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec --no-startup-id swayidle -w timeout 900 'swaylock -f -c 000000' \
+                                 timeout 1500 'systemctl suspend' \
+                                 before-sleep 'swaylock -f -c 000000' \
+                                 after-resume 'swaymsg input type:keyboard xkb_switch_layout 0'
+
+# systemctl start adjust-power-mode.trigger
+# TODO: check and adjust power mode on wake from sleep
+
+exec --no-startup-id ~/scripts/adjust-power-mode.sh
+exec --no-startup-id easyeffects --gapplication-service
+exec --no-startup-id dunst
+exec --no-startup-id ~/scripts/check-battery-popup -L 14 -t 3m -N
 exec --no-startup-id udiskie -t
-exec --no-startup-id blueman-applet
-exec --no-startup-id telegram-desktop -startintray
-# exec --no-startup-id safeeyes
-exec --no-startup-id ~/scripts/toggle-touchpad.sh
-exec --no-startup-id xautolock -detectsleep -corners -000 -cornersize 45 -time 15 -locker "systemctl suspend" -notify 10 -notifier "dunstify 'Suspend in 10 sec!'"
-
-
-
-
-
-
-
-
+exec --no-startup-id blueman-applet > ~/blueman.log
+#exec --no-startup-id /opt/DrataAgent/drata-agent
+exec --no-startup-id google-chrome-stable
+exec --no-startup-id betterbird
+exec --no-startup-id /usr/lib/kdeconnectd
+exec --no-startup-id kdeconnect-indicator
 

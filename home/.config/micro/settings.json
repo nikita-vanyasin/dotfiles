@@ -54,11 +54,13 @@
     "scrollbar": true,
     "scss-formatter": "",
     "shell-formatter": "",
+    "softwrap": true,
     "termtitle": false,
     "tex-formatter": "",
     "trimdiff": false,
     "typescript-formatter": "",
     "vala-formatter": "",
+    "wordwrap": true,
     "xml-formatter": "",
     "yaml-formatter": ""
 }

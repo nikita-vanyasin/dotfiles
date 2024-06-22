@@ -1,9 +1,0 @@
-
-! Fn+F9 (Tool)
-keycode 179 = XF86AudioPlay
-
-! Fn+F11 (Keyboard)
-! keycode ?????? = XF86AudioPrev
-
-! Fn+F12 (Favorites)
-keycode 164 = XF86AudioNext

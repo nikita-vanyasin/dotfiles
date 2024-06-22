@@ -3,11 +3,13 @@ set -U fish_greeting
 set fish_color_valid_path
 set fish_prompt_pwd_dir_length 0
 
-# Start X at login
 if status is-login
-    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-        exec startx -- -keeptty
-    end
+    export SDL_VIDEODRIVER=wayland
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export QT_QPA_PLATFORM=wayland
+    export XDG_CURRENT_DESKTOP=sway
+    export XDG_SESSION_DESKTOP=sway
+    exec sway
 end
 
 if status is-interactive
@@ -20,27 +22,27 @@ export EDITOR="micro"
 export DEFAULT_USER=nikita
 
 
+# completions
+kubectl completion fish | source
+k9s completion fish | source
+
+# aliases
 alias ls='ls --color=auto'
 alias ll='ls -al'
 alias grep='grep --color'
-alias dev-breezzly='cd ~/go/src/gitlab.com/breezzly/breezzly'
-alias dev-gostr='cd ~/projects/gostr'
-alias dev-arango='cd ~/go/src/github.com/arangodb'
 alias drive='cd ~/Desktop/GOOGLE'
+alias k9s='k9s --headless'
+alias cb='xclip -selection clipboard'
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export GOPRIVATE=github.com/arangodb
+export GOPRIVATE=github.com/arangodb,github.com/arangodb-managed
 
 # PATH updates:
-
-fish_add_path $GOBIN $HOME/scripts $HOME/.local/bin
+fish_add_path $GOBIN $HOME/scripts $HOME/.local/bin $HOME/.local/share/JetBrains/Toolbox/scripts
 
 
 source "$HOME/.homesick/repos/homeshick/homeshick.fish"
-
-kubectl completion fish | source
-zutano completion --shell=fish | source
 
 function fish_title
     set -q argv[1]; or set argv fish

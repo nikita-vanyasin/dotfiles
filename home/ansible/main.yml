@@ -1,11 +1,15 @@
 ---
-- name: My Thinkpad X1 gen7 laptop provisioning
+- name: My Thinkpad X1 gen9 laptop provisioning
   hosts: localhost
   become: yes
   vars:
     gen_warning: "WARNING! This file is controlled by Ansible script."
     local_home: "{{ lookup('env','HOME') }}"
     local_user: "{{ lookup('env','USER') }}"
+  vars_prompt:
+    - name: "my_password"
+      prompt: "Enter password"
+      private: yes
   tasks:
     - name: create and setup aur_builder user
       user: name=aur_builder
@@ -23,161 +27,118 @@
         mode: '0755'
     - name: packages
       pacman:
-        update_cache: yes
+        update_cache: no
         name:
+          - base-devel
           - fish
           - fisher
+          - fzf
+          - inetutils
           - mc
           - zip
           - tree
+          - man-db
           - unzip
           - unrar
           - jq
-          - xf86-video-intel
-          - xorg
-          - xorg-xinit
-          #- i3
-          - xf86-input-libinput
+          - sway
+          - swaylock
+          - swayidle
+          - swaybg
+          - xorg-xwayland
           - chrony
+          - i3status
           - py3status
-          - dmenu
-          - pango
           - ttf-dejavu
-          - noto-fonts-emoji
+          - ttf-opensans
+          - ttf-liberation
+          - pango
+          - noto-fonts-emoji # TODO: install source code pro
           - zenity
-          - thunderbird
-          - xdg-utils
           - perl-file-mimeinfo
-          - dunst
+          - dunst # TODO: replace with mako
           - go
           - go-tools
           - htop
-          - tor
           - fwupd
           - wget
+          - rsync
           - pipewire
           - pipewire-pulse
           - pipewire-alsa
           - bluez
           - blueman
+          - libappindicator-gtk3
           - bluez-hid2hci
-          - ntfs-3g
           - udiskie
+          - gnome-keyring
           - docker
           - docker-compose
           - docker-machine
-          - remmina
-          - freerdp
-          - virtualbox-host-modules-arch
-          - virtualbox
-          - virtualbox-guest-iso
+          - kubectl
+          - k9s
           - acpi
           - acpid
-          - ttf-opensans
-          - xclip
           - tlp
-          - tp_smapi
           - acpi_call
           - ethtool
           - efibootmgr
-          - iotop
-          - picom
-          - hsetroot
-          - telegram-desktop
           - pavucontrol
           - vlc
           - sof-firmware
-          - inkscape
-          - soundfont-fluid
-          - xautolock
-          - moreutils
-          - keepassxc
-          - peek
+          - intel-media-driver
+          - libva-intel-driver
+          - libva-utils
+          - grim  # required for flameshot
           - micro
-          - easyeffects
+          - easyeffects 
+          - lsp-plugins
           - tmux
           - fprintd
           - sof-firmware
-          - python-pydbus
-          - python-gobject
-          - fd
+          - alacritty
+          - brightnessctl
+          - vulkan-intel # google-chrome optional
+          - python-pexpect # required for some ansible modules
+          - python-pydbus # required for some py3status modules
+          - telegram-desktop
+          - ntfs-3g
+          - rclone
+          - electrum
+          - obsidian
+          - keepassxc
+          - bind
+          - yank
+          - navi # navi
+          - rust # Ctrl+G
+          - up # | up
+          # <zoom-workaround>
+          # zoom does not support screensharing on wayland https://support.zoom.us/hc/en-us/articles/6634039380877-Sharing-your-screen-on-Wayland
+          # workaround: using virtual camera
+          - v4l2loopback-dkms
+          - obs-studio
+          - kdeconnect
     - name: AUR packages
       aur:
         name:
-          - xinit-xsession
           - networkmanager-dispatcher-chrony
-          #- j4-dmenu-desktop-git
           - pulseaudio-ctl
           - flameshot-git
           - jetbrains-toolbox
           - google-chrome
-          - pinta-git
-          #- grive-git
-          - xkb-switch
-          #- virtualbox-ext-oracle
-          - vlc-plugin-fluidsynth
-          # - mycrypto-bin
           - fish-fishtape
           - fish-done
-        skip_installed: yes
+          - xdg-desktop-portal-wlr-git # required for flameshot
+          - dmenu-wayland-git
+          - zoom
+          # optional kernel modules 
+          - upd72020x-fw # xhci_pci
+          - git-interactive-rebase-tool-bin
+          - wdisplays
+          - betterbird
+        state: present
       become: yes
       become_user: aur_builder
-    - name: generate Xorg fonts index 100dpi
-      command: mkfontdir /usr/share/fonts/100dpi
-    - name: Configure display size (automatically detected size is incorrect)
-      blockinfile:
-        path: "/etc/X11/xorg.conf.d/90-monitor.conf"
-        create: yes
-        content: |
-          Section "Monitor"
-            Identifier    "<default monitor>"
-            DisplaySize   310 174
-          EndSection
-    - name: Configure Keyboard layout and toggling
-      blockinfile:
-        path: "/etc/X11/xorg.conf.d/00-keyboard.conf"
-        create: yes
-        content: |
-          Section "InputClass"
-            Identifier "system-keyboard"
-            MatchIsKeyboard "on"
-            Option "XkbLayout" "us,ru"
-            Option "XkbOptions" "grp:caps_toggle,grp_led:caps"
-          EndSection
-    - name: Configure Backlight control
-      blockinfile:
-        path: "/etc/X11/xorg.conf.d/10-intel_backlight.conf"
-        create: yes
-        content: |
-          Section "Device"
-            Identifier  "card0"
-            Driver      "intel"
-            Option      "Backlight"  "intel_backlight"
-            BusID       "PCI:0:2:0"
-          EndSection
-    - name: Lock screen automatically on Wake from sleep (suspend)
-      blockinfile:
-        path: /etc/systemd/system/wakelock.service
-        create: yes
-        content: |
-          [Unit]
-          Description=Runs i3lock on system resume from a suspended state
-          Before=systemd-suspend.service
-          
-          [Service]
-          User={{ local_user }}
-          Type=forking
-          Environment=DISPLAY=:0
-          ExecStart=/home/{{ local_user }}/scripts/lock-screen.sh
-          
-          [Install]
-          WantedBy=sleep.target
-          WantedBy=suspend.target
-          
-    - name: Enable wakelock service
-      systemd:
-        enabled: yes
-        name: wakelock
     - name: Handy symlink for mounted devices
       file:
         state: link
@@ -185,65 +146,48 @@
         owner: "{{ local_user }}"
         dest: "/home/{{ local_user }}/media"
         src: "/run/media/{{ local_user }}"
-    - name: Add Mic Mute keyboard event handler (Fn+F4=F20)
-      copy:
+    - name: disable acpid events spam
+      blockinfile:
+        path: /etc/acpi/events/buttons
+        create: yes
         content: |
-          # {{ gen_warning }}
-          event=button/f20 F20 00000080 00000000 K
-          action=/etc/acpi/lenovo-mutemic.sh
-        dest: /etc/acpi/events/lenovo-mutemic
-    - name: Add Mic Mute LED control script
-      copy:
+          event=button/(up|down|left|right)
+          action=<drop>
+    - name: acpi event ac_adapter handler
+      blockinfile:
+        path: /etc/acpi/events/ac_adapter
+        create: yes
         content: |
-          #!/bin/bash
-          # {{ gen_warning }}
-          INPUT_DEVICE_1="'Capture'"
-          INPUT_DEVICE_2="'Dmic0'"
-          LED_BRIGHTNESS="/sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
-          if amixer sget -c0 $INPUT_DEVICE_1,0 | grep '\[on\]' ; then
-              if [ "$1" != "update_led_only" ]; then
-                  amixer sset -c0 $INPUT_DEVICE_1,0 nocap
-                  amixer sset -c0 $INPUT_DEVICE_2,0 nocap
-              fi
-              echo "1" > $LED_BRIGHTNESS
-          else
-              if [ "$1" != "update_led_only" ]; then
-                  amixer sset -c0 $INPUT_DEVICE_1,0 cap
-                  amixer sset -c0 $INPUT_DEVICE_2,0 cap
-              fi
-              echo "0" > $LED_BRIGHTNESS
-          fi
-        dest: /etc/acpi/lenovo-mutemic.sh
-        mode: 0777
-    - name: Add bluetooth key event handler. It actually fires after bluetooth state updated
-      copy:
+          event=ac_adapter
+          action=/etc/acpi/actions/update-laptop-mode.sh %e
+    - name: acpi handler update-laptop-mode
+      blockinfile:
+        path: /etc/acpi/actions/update-laptop-mode.sh
+        create: yes
+        mode: '0777'
         content: |
-          # {{ gen_warning }}
-          event=ibm/hotkey HKEY 00000080 00001314
-          action=/etc/acpi/lenovo-bluetooth.sh
-        dest: /etc/acpi/events/lenovo-bluetooth
-    - name: Add bluetooth control script
-      copy:
-        content: |
-          #!/bin/bash         
-          # {{ gen_warning }}
-          SYSFS="/sys/devices/platform/thinkpad_acpi/bluetooth_enable"
-          case "$(cat "$SYSFS")" in                                                                                                                                                            
-            1)                                                                                                                                                                                 
-              sleep 3s
-              bluetoothctl power on
-              ;;                                                                                                                                                                               
-            0)                     
-              bluetoothctl power off
-              ;;                                                                                                                                                                               
+          #!/bin/sh
+          case "$4" in
+              00000000) echo -n "low-power" >/sys/firmware/acpi/platform_profile ;;
+              00000001) echo -n "performance" >/sys/firmware/acpi/platform_profile ;;
+              *) logger "Skipping unknown ac_adapter event value: $4" ;;
           esac
-        dest: /etc/acpi/lenovo-bluetooth.sh
-        mode: 0777    
     - name: Enable and start acpid service
       systemd:
         enabled: yes
         state: started
         name: acpid
+    - name: Enable and start bluetooth service
+      systemd:
+        enabled: yes
+        state: started
+        name: bluetooth
+    - name: Set fish as default shell
+      expect:
+        command: "chsh -s /usr/bin/fish"
+        responses:
+          (?i)password: "{{ my_password }}"
+        creates: ".shell_is_fish"
     - name: Add NTP servers to chrony config
       blockinfile:
         path: /etc/chrony.conf
@@ -281,19 +225,14 @@
         dest: /etc/issue
         src: ./configs/issue
         force: yes
-    - name: Create Windows partition mount folder
-      file:
-        path: /mnt/windows
-        state: directory
-    - name: Add fstab entries
-      blockinfile:
-        path: /etc/fstab
-        content: |
-          /dev/nvme0n1p3    /mnt/windows    ntfs    defaults,rw
-    - name: Apply fstab updates
-      command: mount -a
     - name: Update Font cache
       command: fc-cache -f
+    - name: Ensure fisher plugins updated
+      become: yes
+      become_user: "{{ local_user }}"
+      shell: fisher update
+      args:
+        executable: /bin/fish
     - name: Add more power-saving options
       blockinfile:
         path: /etc/sysctl.d/powersave.conf
@@ -301,71 +240,89 @@
         content: |
           kernel.nmi_watchdog = 0
           vm.dirty_writeback_centisecs = 6000
-    - name: Fix backlight keys scan codes
+    - name: Powertop auto-tune service
       blockinfile:
-        path: /etc/sysctl.d/backlight.conf
+        path: /etc/systemd/system/powertop.service
         create: yes
         content: |
-          kernel.acpi_brightness = vendor
+          [Unit]
+          Description=Powertop tunings
+          
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/usr/bin/powertop --auto-tune
+          
+          [Install]
+          WantedBy=multi-user.target
+    - name: Enable powertop auto-tune service
+      systemd:
+        enabled: yes
+        state: started
+        name: powertop
+
+    - name: adjust-power-mode.sh
+      blockinfile:
+        path: /usr/bin/adjust-power-mode.sh
+        mode: u+rwx
+        create: yes
+        content: |
+            #!/bin/sh
+
+            BAT_STATUS=$(cat /sys/class/power_supply/BAT0/status)
+
+            if [[  $BAT_STATUTS -eq 'Discharging' ]]; then
+            	notify-send "Low-power mode set"
+            	echo -n "low-power" > /sys/firmware/acpi/platform_profile
+            else
+            	notify-send "Performance mode set"
+            	echo -n "performance" > /sys/firmware/acpi/platform_profile
+            fi
+    - name: Laptop power mode adjustment
+      blockinfile:
+        path: /etc/systemd/system/adjust-power-mode.service
+        create: yes
+        content: |
+          [Unit]
+          Description=Adjust laptop powermode
+          
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/usr/bin/adjust-power-mode.sh
+          
+          [Install]
+          WantedBy=multi-user.target
+    - name: Enable laptop power mode adjustment
+      systemd:
+        enabled: yes
+        state: started
+        name: adjust-power-mode        
     - name: Allow users to build Golang sources
       file:
         path: /usr/lib/go/pkg
         recurse: yes
         state: directory
         mode: '1777'
-    - name: Add systemd job to sync Google Drive
-      blockinfile:
-        path: /etc/systemd/system/google-drive-sync.service
-        create: yes
-        content: |
-          [Unit]
-          Description=Runs Grive to sync Google Drive folder
-          
-          [Service]
-          User={{ local_user }}
-          Type=oneshot
-          Environment=HOME=/home/{{ local_user }}
-          ExecStart=/home/{{ local_user }}/scripts/grive-sync.sh
-    - name: Add systemd timer to run Google Drive Sync
-      blockinfile:
-        path: /etc/systemd/system/google-drive-sync.timer
-        create: yes
-        content: |
-          [Unit]
-          Description=Run Google Drive sync every 15 min
-          
-          [Timer]
-          OnCalendar=*:0/15
-          Persistent=true
-          
-          [Install]
-          WantedBy=timers.target
-    - name: Enable google sync
-      systemd:
-        name: google-drive-sync.service
-        enabled: yes
-    - name: Enable and start google sync timer
-      systemd:
-        name: google-drive-sync.timer
-        state: started
-        enabled: yes
     - name: Enable SysRq hotkeys
       sysctl:
         name: kernel.sysrq
         value: '1'
         state: present
-    - name: Kernel modules blacklist
+    - name: udev to disable touchscreen
       blockinfile:
-        path: /etc/modprobe.d/blacklist.conf
+        path: /etc/udev/rules.d/80-touchscreen.rules
         create: yes
         content: |
-          blacklist snd_hda_intel
-          blacklist snd_soc_skl
-    - name: Disable some wake-from-suspend events
-      copy:
-        dest: /etc/tmpfiles.d/disable-wakeup-events.conf
-        content: |
-          w+ /proc/acpi/wakeup - - - - RP01
-          w+ /proc/acpi/wakeup - - - - RP09
-          w+ /proc/acpi/wakeup - - - - RP13
-
+          ACTION=="bind", SUBSYSTEM=="hid", ENV{HID_ID}="0018:000004F3:00002C4E", RUN+="/bin/bash -c 'basename $DEVPATH > /sys/bus/hid/drivers/hid-multitouch/unbind'"
+    #- name: Disable some wake-from-suspend events
+      #copy:
+          #dest: /etc/tmpfiles.d/disable-wakeup-events.conf
+          #content: |
+          #w+ /proc/acpi/wakeup - - - - RP01
+          #w+ /proc/acpi/wakeup - - - - RP09
+          #w+ /proc/acpi/wakeup - - - - RP13
+    - name: Install easyeffects presets
+      ansible.builtin.git:
+        repo: https://github.com/JackHack96/EasyEffects-Presets.git
+        dest: "{{ local_home}}/.config/easyeffects/output"

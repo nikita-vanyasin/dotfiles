@@ -14,7 +14,9 @@
 1) Install ArchLinux. Useful guides: [1](https://wiki.archlinux.org/index.php/Installation_guide), [2](https://kozikow.com/2016/06/03/installing-and-configuring-arch-linux-on-thinkpad-x1-carbon/)
 1) I've specified these mount options in fstab for ext4 `/` partition: `rw,noatime,barrier=0,commit=60`
 1) Set up a network connection. I've installed [NetworkManager](https://wiki.archlinux.org/index.php/NetworkManager) during the Arch setup
+1) Create a user
 1) `$ pacman -S git ansible`
+1) `$ git clone https://aur.archlinux.org/ansible-aur.git && cd ansible-aur && makepkg -sri`
 1) Install [homeshick](https://github.com/andsens/homeshick#quick-install)
 1) `$ homeshick clone nikita-vanyasin/dotfiles`
 1) `$ cd ~/ansible && ./run.sh`
