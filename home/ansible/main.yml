@@ -90,7 +90,6 @@
           - libva-intel-driver
           - libva-utils
           - grim  # required for flameshot
-          - micro
           - easyeffects 
           - lsp-plugins
           - tmux
@@ -110,7 +109,6 @@
           - bind
           - yank
           - navi # navi
-          - rust # Ctrl+G
           - up # | up
           # <zoom-workaround>
           # zoom does not support screensharing on wayland https://support.zoom.us/hc/en-us/articles/6634039380877-Sharing-your-screen-on-Wayland

@@ -1,0 +1,26 @@
+[color]
+	ui = auto
+[user]
+	name = Nikita Vaniasin
+	email = nikita.vanyasin@gmail.com
+	signingkey = 5550C0E36E4FCE2B492CA28C7DDAD22EB464A283
+[gpg]
+	program = /opt/homebrew/bin/gpg
+[commit]
+	gpgsign = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+#[url "git@github.com/clickhouse/data-plane-application/platform:"]
+#	insteadOf = https://clickhouse.com/data-plane-platform
+#[url "git@github.com/clickhouse/data-plane/application/data-plane-management:"]
+#	insteadOf = https://clickhouse.com/data-plane-management
+[push]
+	default = upstream
+[core]
+	autocrlf = false
+[tag]
+	forceSignAnnotated = true
+[merge "ours"]
+	driver = true
+[sequence]
+	editor = interactive-rebase-tool

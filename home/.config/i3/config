@@ -194,7 +194,7 @@ input type:touchpad events disabled
 input type:keyboard xkb_numlock enabled
 
 input type:keyboard xkb_layout us,ru
-input * xkb_options "grp:caps_toggle"
+input * xkb_options "grp:win_space_toggle,caps:escape"
 
 # do not go idle if something is fullscreen:
 for_window [class=".*"] inhibit_idle fullscreen
@@ -235,4 +235,4 @@ exec --no-startup-id google-chrome-stable
 exec --no-startup-id betterbird
 exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id kdeconnect-indicator
-
+exec --no-startup-id flameshot
