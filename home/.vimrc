@@ -18,6 +18,7 @@ set smartcase
 set incsearch
 set hlsearch
 
+set maxmempattern=2000000
 
 " jump to the last position when
 " reopening a file

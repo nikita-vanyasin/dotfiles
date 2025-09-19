@@ -7,12 +7,43 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "features": {
+    // "edit_prediction_provider": "zed"
+  },
+  "show_whitespaces": "none",
+  "agent": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-4-0-sonnet-thinking-latest"
+    },
+    "version": "2"
+  },
+  "context_servers": {
+    // "mcp-server-git": {
+    //   "command": {
+    //     "path": "uvx",
+    //     "args": ["mcp-server-git"]
+    //   },
+    //   "settings": {}
+    // },
+  },
   "vim_mode": true,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+    // "always": use system clipboard when no register is specified
+    // "never": don't use system clipboard unless "+ or "* is specified
+    // "on_yank": use system clipboard for yank operations when no register is specified
+    "use_system_clipboard": "always",
+    // Let `f` and `t` motions extend across multiple lines
+    "use_multiline_find": true,
+    // Let `f` and `t` motions match case insensitively if the target is lowercase
+    "use_smartcase_find": true
+  },
   "relative_line_numbers": true,
   "autosave": "on_focus_change",
   "theme": "JetBrains New Dark",
   "telemetry": {
-    "metrics": true
+    "metrics": false
   },
   "hour_format": "hour24",
   "ui_font_size": 17,
@@ -49,10 +80,30 @@
       "format_on_save": "off"
     },
     "YAML": {
+      "enable_language_server": false,
       "format_on_save": "off"
+    },
+    "C++": {
+      "format_on_save": "off"
+    },
+    "JSON": {
+      "format_on_save": "off"
+    }
+  },
+  "lsp": {
+    "clangd": {
+      "binary": {
+        "path": "/usr/bin/clangd",
+        "arguments": []
+      }
     }
   },
   "terminal": {
     "copy_on_select": true
+  },
+  "preview_tabs": {
+    "enabled": true,
+    "enable_preview_from_file_finder": false,
+    "enable_preview_from_code_navigation": false
   }
 }

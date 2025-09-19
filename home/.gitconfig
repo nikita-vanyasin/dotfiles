@@ -8,6 +8,9 @@
 	program = /opt/homebrew/bin/gpg
 [commit]
 	gpgsign = true
+[url "git@github.com:ClickHouse/data-plane-application/molen"]
+	insteadOf = https://clickhouse.com/molen
+
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 #[url "git@github.com/clickhouse/data-plane-application/platform:"]

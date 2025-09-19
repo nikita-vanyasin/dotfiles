@@ -10,7 +10,7 @@ size = 16
 # SpawnNewInstance
 [keyboard]
 bindings = [
-  { key = "Enter", mods = "Control", action = "SpawnNewInstance" },
+  { key = "Enter", mods = "Command", action = "SpawnNewInstance" },
 ]
 
 [window]
